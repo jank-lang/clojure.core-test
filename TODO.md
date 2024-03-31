@@ -118,7 +118,7 @@
  - [x] `bit-shift-left` Bitwise shift left
  - [x] `bit-shift-right` Bitwise shift right
  - [x] `bit-test` Test bit at index n
- - [ ] `bit-xor` Bitwise exclusive or
+ - [x] `bit-xor` Bitwise exclusive or
  - [ ] `boolean` Coerce to boolean
  - [ ] `boolean-array` Creates an array of booleans
  - [ ] `boolean?`  Return true if x is a Boolean

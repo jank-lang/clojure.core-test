@@ -107,3 +107,9 @@
     true 2r1001 3
     false 2r1001 4
     false 2r1001 63))
+
+(deftest test-bit-xor
+  ; bitwise exclusive or
+  (are [ex a b] (= ex (bit-xor a b))
+    2r0101 2r1100 2r1001)
+  )
