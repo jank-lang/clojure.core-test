@@ -111,5 +111,8 @@
 (deftest test-bit-xor
   ; bitwise exclusive or
   (are [ex a b] (= ex (bit-xor a b))
-    2r0101 2r1100 2r1001)
-  )
+    2r0101 2r1100 2r1001))
+
+(deftest test-unsigned-bit-shift-right
+  (are [ex a b] (= ex (unsigned-bit-shift-right a b))
+    18014398509481968 -1 10))

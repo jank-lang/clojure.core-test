@@ -642,7 +642,7 @@
  - [ ] `unquote` no doc
  - [ ] `unquote-splicing` no doc
  - [ ] `unreduced` If x is reduced?, returns (deref x), else returns x
- - [ ] `unsigned-bit-shift-right` Bitwise shift right, without sign-extension.
+ - [x] `unsigned-bit-shift-right` Bitwise shift right, without sign-extension.
  - [ ] `update` 'Updates' a value in an associative structure, where k is a key and f is a function that will take the old value and any supplied args and return the new value, and returns a new structure. If the key does not exist, nil is passed as the old value.
  - [ ] `update-in` 'Updates' a value in a nested associative structure, where ks is a sequence of keys and f is a function that will take the old value and any supplied args and return the new value, and returns a new nested structure. If any levels do not exist, hash-maps will be created.
  - [ ] `update-keys` m f => {(f k) v ...} Given a map m and a function f of 1-argument, returns a new map whose keys are the result of applying f to the keys of m, mapped to the corresponding values of m. f must return a unique key for each key of m, else the behavior is undefined.
