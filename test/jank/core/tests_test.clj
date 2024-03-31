@@ -65,3 +65,9 @@
   (are [ex a] (= ex (bit-not a))
     -2r1000 2r0111
     2r0111 -2r1000))
+
+(deftest test-bit-or
+  ; bitwise or
+  (are [ex a b] (= ex (bit-or a b))
+    2r1101 2r1100 2r1001
+    1 1 0))
