@@ -115,7 +115,7 @@
  - [x] `bit-not` Bitwise complement
  - [x] `bit-or` Bitwise or
  - [x] `bit-set` Set bit at index n
- - [ ] `bit-shift-left` Bitwise shift left
+ - [x] `bit-shift-left` Bitwise shift left
  - [ ] `bit-shift-right` Bitwise shift right
  - [ ] `bit-test` Test bit at index n
  - [ ] `bit-xor` Bitwise exclusive or

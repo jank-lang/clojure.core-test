@@ -81,3 +81,9 @@
     65536 0 16
     256 0 8
     16 0 4))
+
+(deftest test-bit-shift-left
+  ; bitwise shift left
+  (are [ex a b] (= ex (bit-shift-left a b))
+    1024 1 10
+    2r110100 2r1101 2))
