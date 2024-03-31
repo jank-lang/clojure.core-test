@@ -59,3 +59,9 @@
   (are [ex a b] (= ex (bit-flip a b))
     2r1111 2r1011 2
     2r1011 2r1111 2))
+
+(deftest test-bit-not
+  ; bitwise complement
+  (are [ex a] (= ex (bit-not a))
+    -2r1000 2r0111
+    2r0111 -2r1000))

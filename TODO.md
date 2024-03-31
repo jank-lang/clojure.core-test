@@ -112,7 +112,7 @@
  - [x] `bit-and-not` Bitwise and with complement
  - [x] `bit-clear` Clear bit at index n
  - [x] `bit-flip` Flip bit at index n
- - [ ] `bit-not` Bitwise complement
+ - [x] `bit-not` Bitwise complement
  - [ ] `bit-or` Bitwise or
  - [ ] `bit-set` Set bit at index n
  - [ ] `bit-shift-left` Bitwise shift left
