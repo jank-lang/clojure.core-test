@@ -33,3 +33,9 @@
     ""
     0
     1))
+
+(deftest test-bit-and
+  ; bitwise and
+  (are [ex a b] (= ex (bit-and a b))
+    8 12 9
+    8 8 0xff))
