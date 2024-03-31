@@ -60,7 +60,7 @@
  - [ ] `==` Returns non-nil if nums all have the equivalent value (type-independent), otherwise false
  - [ ] `>` Returns non-nil if nums are in monotonically decreasing order, otherwise false.
  - [ ] `>=` Returns non-nil if nums are in monotonically non-increasing order, otherwise false.
- - [ ] `abs` Returns the absolute value of a. If a is Long/MIN_VALUE => Long/MIN_VALUE If a is a double and zero => +0.0 If a is a double and ##Inf or ##-Inf => ##Inf If a is a double and ##NaN => ##NaN
+ - [x] ~`abs` Returns the absolute value of a. If a is Long/MIN_VALUE => Long/MIN_VALUE If a is a double and zero => +0.0 If a is a double and ##Inf or ##-Inf => ##Inf If a is a double and ##NaN => ##NaN~
  - [ ] `accessor` Returns a fn that, given an instance of a structmap with the basis, returns the value at the key. The key must be in the basis. The returned function should be (slightly) more efficient than using get, but such use of accessors should be limited to known performance-critical areas.
  - [ ] `aclone` Returns a clone of the Java array. Works on arrays of known types.
  - [ ] `add-classpath` DEPRECATED Adds the url (String or URL object) to the classpath per URLClassLoader.addURL
