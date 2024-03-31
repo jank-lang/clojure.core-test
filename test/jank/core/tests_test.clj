@@ -71,3 +71,13 @@
   (are [ex a b] (= ex (bit-or a b))
     2r1101 2r1100 2r1001
     1 1 0))
+
+(deftest test-bit-set
+  ; Set bit at index b
+  (are [ex a b] (= ex (bit-set a b))
+    2r1111 2r1011 2
+    -9223372036854775808 0 63
+    4294967296 0 32
+    65536 0 16
+    256 0 8
+    16 0 4))
