@@ -23,3 +23,13 @@
     true true true
     false true false
     nil true nil))
+
+(deftest test-any?
+  ; return true for any argument
+  (are [x] (= (any? x) true)
+    nil
+    true
+    false
+    ""
+    0
+    1))
