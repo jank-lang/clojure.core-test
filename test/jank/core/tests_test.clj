@@ -14,3 +14,12 @@
     -123N 123N
     -1/5 1/5)
   (is (NaN? (abs ##NaN))))
+
+(deftest test-and
+  ; (and) should return true
+  (is true (and))
+  ; if left hand side is truthy (not nil or false) return right hand side
+  (are [ex a b] (= ex (and a b))
+    true true true
+    false true false
+    nil true nil))

@@ -78,7 +78,7 @@
  - [ ] `alter-var-root` Atomically alters the root binding of var v by applying f to its current value plus any args
  - [ ] `amap` Maps an expression across an array a, using an index named idx, and return value named ret, initialized to a clone of a, then setting each element of ret to the evaluation of expr, returning the new array ret.
  - [ ] `ancestors` Returns the immediate and indirect parents of tag, either via a Java type inheritance relationship or a relationship established via derive. h must be a hierarchy obtained from make-hierarchy, if not supplied defaults to the global hierarchy
- - [ ] `and` Evaluates exprs one at a time, from left to right. If a form returns logical false (nil or false), and returns that value and doesn't evaluate any of the other expressions, otherwise it returns the value of the last expr. (and) returns true.
+ - [x] `and` Evaluates exprs one at a time, from left to right. If a form returns logical false (nil or false), and returns that value and doesn't evaluate any of the other expressions, otherwise it returns the value of the last expr. (and) returns true.
  - [ ] `any?`  Returns true given any argument.
  - [ ] `apply` Applies fn f to the argument list formed by prepending intervening arguments to args.
  - [ ] `areduce` Reduces an expression across an array a, using an index named idx, and return value named ret, initialized to init, setting ret to the evaluation of expr at each step, returning ret.
