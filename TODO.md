@@ -110,7 +110,7 @@
  - [ ] `binding` binding => var-symbol init-expr Creates new bindings for the (already-existing) vars, with the supplied initial values, executes the exprs in an implicit do, then re-establishes the bindings that existed before. The new bindings are made in parallel (unlike let); all init-exprs are evaluated before the vars are bound to their new values.
  - [x] `bit-and` Bitwise and
  - [x] `bit-and-not` Bitwise and with complement
- - [ ] `bit-clear` Clear bit at index n
+ - [x] `bit-clear` Clear bit at index n
  - [ ] `bit-flip` Flip bit at index n
  - [ ] `bit-not` Bitwise complement
  - [ ] `bit-or` Bitwise or

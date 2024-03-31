@@ -48,3 +48,8 @@
     8 12 4
     0xff 0xff 0
     0x80 0xff 0x7f))
+
+(deftest test-bit-clear
+  ; clear bit at index n
+  (are [ex a b] (= ex (bit-clear a b))
+    3 11 3))
