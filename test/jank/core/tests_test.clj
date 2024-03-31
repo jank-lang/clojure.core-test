@@ -39,3 +39,12 @@
   (are [ex a b] (= ex (bit-and a b))
     8 12 9
     8 8 0xff))
+
+
+(deftest test-bit-and-not
+  ; equivalent to (bit-and x (bit-not y))
+  (are [ex a b] (= ex (bit-and-not a b))
+    0 0 0
+    8 12 4
+    0xff 0xff 0
+    0x80 0xff 0x7f))
