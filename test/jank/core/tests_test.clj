@@ -53,3 +53,9 @@
   ; clear bit at index n
   (are [ex a b] (= ex (bit-clear a b))
     3 11 3))
+
+(deftest test-bit-flip
+  ; flip bit at index n
+  (are [ex a b] (= ex (bit-flip a b))
+    2r1111 2r1011 2
+    2r1011 2r1111 2))
