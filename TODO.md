@@ -117,7 +117,7 @@
  - [x] `bit-set` Set bit at index n
  - [x] `bit-shift-left` Bitwise shift left
  - [x] `bit-shift-right` Bitwise shift right
- - [ ] `bit-test` Test bit at index n
+ - [x] `bit-test` Test bit at index n
  - [ ] `bit-xor` Bitwise exclusive or
  - [ ] `boolean` Coerce to boolean
  - [ ] `boolean-array` Creates an array of booleans

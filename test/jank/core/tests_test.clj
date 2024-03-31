@@ -97,3 +97,13 @@
     2r1 2r1101 3
     2r0 2r1101 4
     2r0 2r1101 63))
+
+(deftest test-bit-test
+  ; test bit at index n
+  (are [ex a b] (= ex (bit-test a b))
+    true 2r1001 0
+    false 2r1001 1
+    false 2r1001 2
+    true 2r1001 3
+    false 2r1001 4
+    false 2r1001 63))
