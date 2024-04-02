@@ -1,4 +1,4 @@
-(ns jank.core.tests-test
+(ns clojure.core.tests-test
   (:require [clojure.test :refer :all]))
 
 (deftest test-abs

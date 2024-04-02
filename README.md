@@ -1,4 +1,4 @@
-# jank.core.tests
+# clojure.core.tests
 
 Tests for clojure.core.
 
