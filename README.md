@@ -2,6 +2,9 @@
 
 Tests for clojure.core.
 
+See `./COVERAGE.MD` for test coverage.
+As of 2024-04-13 total of 16 out of 686 functions in `clojure.core` have tests here.
+
 ## Usage
 
 ```sh
