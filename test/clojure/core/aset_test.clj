@@ -9,8 +9,38 @@
 ;; (deftest test-aset (aset))
 ;; ; Sets the value at the index/indices. Works on Java arrays of reference types. Returns val.
 
-;; (deftest test-aset-boolean (aset-boolean))
-;; ; Sets the value at the index/indices. Works on arrays of boolean. Returns val.
+;  - [x] edge: intininput is an infinte sequence
+(deftest test-aset-boolean
+  (let [arr (boolean-array 3) update true]
+    (is (= [false false false] (vec arr)) "boolean-array should be false by default")
+    (aset-boolean arr 1 update)
+    (is (= [false true false] (vec arr)) "failed to update boolean-array")
+    (aset-boolean arr 0 update)
+    (is (= [true true false] (vec arr)) "failed to update first element of boolean-array")
+    (aset-boolean arr 2 update)
+    (is (= [true true true] (vec arr)) "failed to update last element of boolean-array")
+    ))
+
+(deftest test-aset-boolean-return-val
+  (let [arr (boolean-array 3) update true]
+    (is (= update (aset-boolean arr 0 update)))))
+
+(deftest test-aset-boolean-2dimensional-array
+  (let [arr (to-array [(boolean-array [true true]) (boolean-array [true true])])
+        update false]
+    (is (= '([true true] [true true]) (map vec arr)))
+    (aset-boolean arr 0 1 update)
+    (is (= `([true ~update] [ true true]) (map vec arr)))))
+
+(deftest test-aset-boolean-fail-with-invalid-args
+  (is (thrown? NullPointerException (aset-boolean nil 0 2)))
+  (is (thrown? NullPointerException (aset-boolean (boolean-array [true]) nil 2)))
+  (is (thrown? ArrayIndexOutOfBoundsException (aset-boolean (boolean-array [true]) 2 nil)))
+  ; flipped arguments
+  (is (thrown? ClassCastException (aset-boolean 2 (boolean-array [true]) 2)))
+  (is (thrown? IllegalArgumentException (aset-boolean (repeat true) 0 2)))
+  ; out of bounds
+  (is (thrown? ArrayIndexOutOfBoundsException (aset-boolean (boolean-array [true]) 99 0))))
 
 ;; (deftest test-aset-byte (aset-byte))
 ;; ; Sets the value at the index/indices. Works on arrays of byte. Returns val.
@@ -55,7 +85,8 @@
   (is (thrown? NullPointerException (aset-int (int-array [1]) 2 nil)))
   ; flipped arguments
   (is (thrown? ClassCastException (aset-int 2 (int-array [1]) 2)))
-  (is (thrown? IllegalArgumentException (aset-int (repeat 1) 0 2))))
+  (is (thrown? IllegalArgumentException (aset-int (repeat 1) 0 2)))
+  (is (thrown? ArrayIndexOutOfBoundsException (aset-int (int-array [1]) 99 0))))
 
 
 ;; (deftest test-aset-int-to-big

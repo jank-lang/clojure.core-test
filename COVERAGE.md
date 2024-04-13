@@ -85,7 +85,7 @@
  - [ ] `array-map` Constructs an array-map. If any keys are equal, they are handled as if by repeated uses of assoc.
  - [ ] `as->` Binds name to expr, evaluates the first form in the lexical context of that binding, then binds name to that result, repeating for each successive form, returning the result of the last form.
  - [ ] `aset` Sets the value at the index/indices. Works on Java arrays of reference types. Returns val.
- - [ ] `aset-boolean` Sets the value at the index/indices. Works on arrays of boolean. Returns val.
+ - [x] `aset-boolean` Sets the value at the index/indices. Works on arrays of boolean. Returns val.
  - [ ] `aset-byte` Sets the value at the index/indices. Works on arrays of byte. Returns val.
  - [ ] `aset-char` Sets the value at the index/indices. Works on arrays of char. Returns val.
  - [ ] `aset-double` Sets the value at the index/indices. Works on arrays of double. Returns val.
