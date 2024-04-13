@@ -90,7 +90,7 @@
  - [ ] `aset-char` Sets the value at the index/indices. Works on arrays of char. Returns val.
  - [ ] `aset-double` Sets the value at the index/indices. Works on arrays of double. Returns val.
  - [ ] `aset-float` Sets the value at the index/indices. Works on arrays of float. Returns val.
- - [ ] `aset-int` Sets the value at the index/indices. Works on arrays of int. Returns val.
+ - [x] `aset-int` Sets the value at the index/indices. Works on arrays of int. Returns val.
  - [ ] `aset-long` Sets the value at the index/indices. Works on arrays of long. Returns val.
  - [ ] `aset-short` Sets the value at the index/indices. Works on arrays of short. Returns val.
  - [ ] `assert` Evaluates expr and throws an exception if it does not evaluate to logical true.
