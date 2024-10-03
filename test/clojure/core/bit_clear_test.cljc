@@ -1,7 +1,7 @@
 (ns clojure.core.bit-clear-test
   (:require [clojure.test :as t]))
 
-(t/deftest test-bit-clear
+(t/deftest common
   (t/is (thrown? NullPointerException (bit-clear nil 1)))
   (t/is (thrown? NullPointerException (bit-clear 1 nil)))
 

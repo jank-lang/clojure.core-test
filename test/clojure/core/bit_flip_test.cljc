@@ -1,7 +1,7 @@
 (ns clojure.core.bit-flip-test
   (:require [clojure.test :as t]))
 
-(t/deftest test-bit-flip
+(t/deftest common
   (t/is (thrown? NullPointerException (bit-flip nil 1)))
   (t/is (thrown? NullPointerException (bit-flip 1 nil)))
 
