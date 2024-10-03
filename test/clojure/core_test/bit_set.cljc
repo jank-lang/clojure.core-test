@@ -1,4 +1,4 @@
-(ns clojure.core.bit-set-test
+(ns clojure.core-test.bit-set
   (:require [clojure.test :as t]))
 
 (t/deftest common

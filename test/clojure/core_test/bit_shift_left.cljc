@@ -1,4 +1,4 @@
-(ns clojure.core.bit-shift-left-test
+(ns clojure.core-test.bit-shift-left
   (:require [clojure.test :as t]))
 
 (t/deftest common

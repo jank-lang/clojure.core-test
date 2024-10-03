@@ -1,4 +1,4 @@
-(ns clojure.core.any-test
+(ns clojure.core-test.any
   (:require [clojure.test :as t]))
 
 (t/deftest common

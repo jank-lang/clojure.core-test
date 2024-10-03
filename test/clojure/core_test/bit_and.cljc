@@ -1,4 +1,4 @@
-(ns clojure.core.bit-and-test
+(ns clojure.core-test.bit-and
   (:require [clojure.test :as t]))
 
 (t/deftest common
