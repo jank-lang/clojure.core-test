@@ -5,7 +5,8 @@ as a compliance suite for other Clojure dialects.
 
 Currently, this project is owned by jank, the native Clojure dialect. As we
 build it up and prove jank's readiness, we also create value for the rest of the
-Clojure community.
+Clojure community. As it currently stands, jank isn't able to run `clojure.test`
+yet, so we're just focusing on building out the test cases for now.
 
 ## How to contribute
 Anyone with Clojure knowledge can help out!
