@@ -1,27 +1,27 @@
-# clojure.core.tests
+# The clojure.core test suite
+This is a set of tests for Clojure's core standard library. Its purpose is not
+only to draw clear boundaries around Clojure JVM's behavior, but also to serve
+as a compliance suite for other Clojure dialects.
 
-Tests for clojure.core.
+Currently, this project is owned by jank, the native Clojure dialect. As we
+build it up and prove jank's readiness, we also create value for the rest of the
+Clojure community.
 
-See `./COVERAGE.MD` for test coverage.
-As of 2024-04-13 total of 16 out of 686 functions in `clojure.core` have tests here.
+## How to contribute
+Anyone with Clojure knowledge can help out!
 
-## Usage
+Check out the latest progress and the steps for helping out here: https://github.com/jank-lang/clojure.core-test/issues/1
 
-```sh
+## Running the tests
+For a one-off run, you can use the following:
+
+```bash
 $ lein test
 ```
 
-## License
+However, during development, you can use `test-refresh` to automatically re-run
+the test suite whenever you save new changes.
 
-Copyright © 2024 Olav Frengstad
-
-This program and the accompanying materials are made available under the
-terms of the Eclipse Public License 2.0 which is available at
-http://www.eclipse.org/legal/epl-2.0.
-
-This Source Code may also be made available under the following Secondary
-Licenses when the conditions for such availability set forth in the Eclipse
-Public License, v. 2.0 are satisfied: GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or (at your
-option) any later version, with the GNU Classpath Exception which is available
-at https://www.gnu.org/software/classpath/license.html.
+```bash
+$ lein test-refresh
+```
