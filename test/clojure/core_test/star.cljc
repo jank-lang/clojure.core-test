@@ -68,6 +68,9 @@
     5 1N 5
     5 1N 5N)
 
+  (is (thrown? Exception (* 1 nil)))
+  (is (thrown? Exception (* nil 1)))
+
   #?@(:cljs nil
       :default
       [(is (instance? clojure.lang.BigInt (* 0 1N)))
