@@ -9,10 +9,10 @@
   (t/are [ex a b] (= ex (bit-and a b))
          8 12 9
          8 8 0xff
-         0 r/ALL-ONES-INT 0
-         0 0 r/ALL-ONES-INT
-         r/ALL-ONES-INT r/ALL-ONES-INT r/ALL-ONES-INT
-         0 r/FULL-WIDTH-CHECKER-POS 0
-         r/FULL-WIDTH-CHECKER-POS r/FULL-WIDTH-CHECKER-POS r/FULL-WIDTH-CHECKER-POS
-         r/FULL-WIDTH-CHECKER-POS r/FULL-WIDTH-CHECKER-POS r/ALL-ONES-INT 
-         0 r/FULL-WIDTH-CHECKER-POS r/FULL-WIDTH-CHECKER-NEG))
+         0 r/all-ones-int 0
+         0 0 r/all-ones-int
+         r/all-ones-int r/all-ones-int r/all-ones-int
+         0 r/full-width-checker-pos 0
+         r/full-width-checker-pos r/full-width-checker-pos r/full-width-checker-pos
+         r/full-width-checker-pos r/full-width-checker-pos r/all-ones-int 
+         0 r/full-width-checker-pos r/full-width-checker-neg))

@@ -11,10 +11,10 @@
          8 12 4
          0xff 0xff 0
          0x80 0xff 0x7f
-         r/ALL-ONES-INT r/ALL-ONES-INT 0
-         0 0 r/ALL-ONES-INT
-         0 r/ALL-ONES-INT r/ALL-ONES-INT
-         r/FULL-WIDTH-CHECKER-POS r/FULL-WIDTH-CHECKER-POS 0
-         0 r/FULL-WIDTH-CHECKER-POS r/FULL-WIDTH-CHECKER-POS
-         0 r/FULL-WIDTH-CHECKER-POS r/ALL-ONES-INT 
-         r/FULL-WIDTH-CHECKER-POS r/FULL-WIDTH-CHECKER-POS r/FULL-WIDTH-CHECKER-NEG))
+         r/all-ones-int r/all-ones-int 0
+         0 0 r/all-ones-int
+         0 r/all-ones-int r/all-ones-int
+         r/full-width-checker-pos r/full-width-checker-pos 0
+         0 r/full-width-checker-pos r/full-width-checker-pos
+         0 r/full-width-checker-pos r/all-ones-int 
+         r/full-width-checker-pos r/full-width-checker-pos r/full-width-checker-neg))
