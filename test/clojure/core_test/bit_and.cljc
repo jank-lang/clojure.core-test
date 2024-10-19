@@ -1,5 +1,6 @@
 (ns clojure.core-test.bit-and
-  (:require [clojure.test :as t]))
+  (:require [clojure.test :as t]
+            [clojure.core-test.number-range :as r]))
 
 (t/deftest common
   (t/is (thrown? NullPointerException (bit-and nil 1)))
@@ -7,4 +8,11 @@
 
   (t/are [ex a b] (= ex (bit-and a b))
          8 12 9
-         8 8 0xff))
+         8 8 0xff
+         0 r/all-ones-int 0
+         0 0 r/all-ones-int
+         r/all-ones-int r/all-ones-int r/all-ones-int
+         0 r/full-width-checker-pos 0
+         r/full-width-checker-pos r/full-width-checker-pos r/full-width-checker-pos
+         r/full-width-checker-pos r/full-width-checker-pos r/all-ones-int 
+         0 r/full-width-checker-pos r/full-width-checker-neg))
