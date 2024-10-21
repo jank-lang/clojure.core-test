@@ -8,8 +8,8 @@
          0 false
          1.0 false
          -1.0 false
-         (Double/valueOf 1.0) false
-         (Double/valueOf 1.0) false
+         (double 1.0) false
+         (double -1.0) false
          ##Inf false
          ##-Inf false
          ##NaN true))
