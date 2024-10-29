@@ -13,14 +13,15 @@
         a (atom 0)
         r (atom 10)
         update! (fn []
-                  (let [do-update (fn [atm]
+                  (let [do-update (fn [x op]
                                     (try
-                                      (swap! atm inc)
+                                      (op x inc)
                                       (catch clojure.lang.ExceptionInfo e
                                         (let [{:keys [old] :as data} (ex-data e)]
                                           (vswap! state conj data)))))]
-                    (do-update a)
-                    (do-update r)))
+                    (do-update a swap!)
+                    (do-update r swap!)
+                    (do-update #'testvar alter-var-root)))
         keyed (fn [k s] (filter #(= k (:key %)) s))]
 
     ;; check removing something that isn't there
@@ -31,60 +32,75 @@
     ;; add a watch to the atom
     (is (= a (add-watch a :a tester1)))
     (is (= r (add-watch r :r tester1)))
+    (is (= #'testvar (add-watch #'testvar :v tester1)))
     (update!)
     
     ;; add a second watch to the atom - new key
     (add-watch a :s tester2)
     (add-watch r :s tester2)
+    (add-watch #'testvar :s tester2)
     (update!)
 
     ;; replace the first watch by reusing the keys
     (add-watch a :a tester2)
     (add-watch r :r tester2)
+    (add-watch #'testvar :v tester2)
     (update!)
 
     ;; remove the first watche
     (is (= a (remove-watch a :a)))
     (is (= r (remove-watch r :r)))
+    (is (= #'testvar (remove-watch #'testvar :v)))
     (update!)
 
     ;; check progress
     (let [checkdata [{:key :a :ref a :old 0 :new 1 :tester 1}
                      {:key :r :ref r :old 10 :new 11 :tester 1}
+                     {:key :v :ref #'testvar :old 40 :new 41 :tester 1}
 
                      {:key :a :ref a :old 1 :new 2 :tester 1}
                      {:key :r :ref r :old 11 :new 12 :tester 1}
+                     {:key :v :ref #'testvar :old 41 :new 42 :tester 1}
                      {:key :s :ref a :old 1 :new 2 :tester 2}
                      {:key :s :ref r :old 11 :new 12 :tester 2}
+                     {:key :s :ref #'testvar :old 41 :new 42 :tester 2}
 
                      {:key :a :ref a :old 2 :new 3 :tester 2}
                      {:key :r :ref r :old 12 :new 13 :tester 2}
+                     {:key :v :ref #'testvar :old 42 :new 43 :tester 2}
                      {:key :s :ref a :old 2 :new 3 :tester 2}
                      {:key :s :ref r :old 12 :new 13 :tester 2}
+                     {:key :s :ref #'testvar :old 42 :new 43 :tester 2}
 
                      {:key :s :ref a :old 3 :new 4 :tester 2}
-                     {:key :s :ref r :old 13 :new 14 :tester 2}]]
+                     {:key :s :ref r :old 13 :new 14 :tester 2}
+                     {:key :s :ref #'testvar :old 43 :new 44 :tester 2}]]
       (is (= (keyed :a checkdata) (keyed :a @state)))
       (is (= (keyed :r checkdata) (keyed :r @state)))
+      (is (= (keyed :v checkdata) (keyed :v @state)))
       (vreset! state [])
 
       ;; remove the second watche - should be no updates
       (remove-watch a :s)
       (remove-watch r :s)
+      (remove-watch #'testvar :s)
       (update!)
       (is (empty? @state))
 
       ;; add the first again, and check if it still works
       (add-watch a :a tester1)
       (add-watch r :r tester1)
+      (add-watch #'testvar :v tester1)
       (update!)
 
       (is (= [{:key :a :ref a :old 5 :new 6 :tester 1}] (keyed :a @state)))
       (is (= [{:key :r :ref r :old 15 :new 16 :tester 1}] (keyed :r @state)))
+      (is (= [{:key :v :ref #'testvar :old 45 :new 46 :tester 1}] (keyed :v @state)))
 
       ;; add error watch
       (add-watch a :e err)
       (add-watch r :e err)
+      (add-watch #'testvar :e err)
       (update!)
 
       ;; The final watch may or may not have gone to :a before the error
@@ -95,9 +111,13 @@
       (is (= #{{:key :r :ref r :old 15 :new 16 :tester 1}}
              (disj (set (keyed :r @state))
                    {:key :r :ref r :old 16 :new 17 :tester 1})))
+      (is (= #{{:key :v :ref #'testvar :old 45 :new 46 :tester 1}}
+             (disj (set (keyed :v @state))
+                   {:key :v :ref #'testvar :old 46 :new 47 :tester 1})))
       
       (is (= #{{:key :e :ref a :old 6 :new 7 :tester :err}
-               {:key :e :ref r :old 16 :new 17 :tester :err}}
+               {:key :e :ref r :old 16 :new 17 :tester :err}
+               {:key :e :ref #'testvar :old 46 :new 47 :tester :err}}
              (set (keyed :e @state)))))))
 
 #?(:cljs nil
