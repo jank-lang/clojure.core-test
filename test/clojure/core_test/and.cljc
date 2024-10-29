@@ -22,7 +22,9 @@
       (t/is (= nil (and (vswap! counter inc) nil)))
       (t/is (= 1 @counter))))
   (t/testing "early exits"
-    (t/is (= nil (and nil (last (range))))))
+    (let [counter (volatile! 0)]
+      (t/is (= nil (and nil (vswap! counter inc))))
+      (t/is (= 0 @counter))))
   (t/testing "handles varargs"
     (t/is (= nil (and nil nil 3)))
     (t/is (= nil (and nil nil nil nil nil nil nil nil nil nil nil nil true)))))
