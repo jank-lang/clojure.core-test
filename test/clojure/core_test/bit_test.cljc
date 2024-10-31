@@ -2,8 +2,10 @@
   (:require [clojure.test :as t]))
 
 (t/deftest common
-  (t/is (thrown? NullPointerException (bit-test nil 1)))
-  (t/is (thrown? NullPointerException (bit-test 1 nil)))
+  #?(:clj (t/is (thrown? NullPointerException (bit-test nil 1)))
+     :cljs (t/is (bit-test nil 1)))
+  #?(:clj (t/is (thrown? NullPointerException (bit-test 1 nil)))
+     :cljs (t/is (bit-test 1 nil)))
 
   (t/are [ex a b] (= ex (bit-test a b))
          true 2r1001 0

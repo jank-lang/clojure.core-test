@@ -2,8 +2,10 @@
   (:require [clojure.test :as t]))
 
 (t/deftest common
-  (t/is (thrown? NullPointerException (bit-shift-right nil 1)))
-  (t/is (thrown? NullPointerException (bit-shift-right 1 nil)))
+  #?(:clj (t/is (thrown? NullPointerException (bit-shift-right nil 1)))
+     :cljs (t/is (bit-shift-right nil 1)))
+  #?(:clj (t/is (thrown? NullPointerException (bit-shift-right 1 nil)))
+     :cljs (t/is (bit-shift-right 1 nil)))
 
   (t/are [ex a b] (= ex (bit-shift-right a b))
          2r1101 2r1101 0
