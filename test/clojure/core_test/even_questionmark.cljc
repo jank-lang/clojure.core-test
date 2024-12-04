@@ -16,6 +16,7 @@
 
 (t/deftest invalid
   (t/are [x] (thrown? #?(:clj IllegalArgumentException :cljs js/Error) (even? x))
+    #_:clj-kondo/ignore nil
     ##Inf
     ##-Inf
     ##NaN
