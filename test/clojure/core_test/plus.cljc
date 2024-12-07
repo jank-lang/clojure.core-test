@@ -81,3 +81,88 @@
        (is (instance? clojure.lang.BigInt (+ 1N 5)))
        (is (instance? clojure.lang.BigInt (+ 1N 5N)))]))
 
+
+(deftest rationals
+  (are [sum x y] (and (= sum (+ x y))
+                      (= sum (+ y x))) ; addition should be commutative
+    1 1/2 1/2
+    1 1/3 2/3
+    1 1/4 3/4
+    1 1/5 4/5
+    1 1/6 5/6
+    1 1/7 6/7
+    1 1/8 7/8
+    1 1/9 8/9
+
+    1/2 1 -1/2
+    1/3 1 -2/3
+    1/4 1 -3/4
+    1/5 1 -4/5
+    1/6 1 -5/6
+    1/7 1 -6/7
+    1/8 1 -7/8
+    1/9 1 -8/9
+
+    3/2  1 1/2
+    5/3  1 2/3
+    7/4  1 3/4
+    9/5  1 4/5
+    11/6 1 5/6
+    13/7 1 6/7
+    15/8 1 7/8
+    17/9 1 8/9
+
+    2 3/2 1/2
+    2 4/3 2/3
+
+    ;; Be careful here because floating point rounding can bite us.
+    ;; This case is pretty safe.
+    1.5 1.0 1/2)
+
+  (is (thrown? Exception (+ 1/2 nil)))
+  (is (thrown? Exception (+ nil 1/2)))
+
+  #?@(:cljs nil
+      :default
+      [(is (+ r/max-int 1/2))           ; test that these don't throw
+       (is (+ r/min-int -1/2))
+       (is (= r/max-double (+ r/max-double 1/2))) ; should silently round
+       (is (= (- r/max-double) (+ (- r/max-double) -1/2)))
+       (is (= 0.5 (+ r/min-double 1/2)))
+       (is (= -0.5 (+ r/min-double -1/2)))
+       (is (instance? clojure.lang.Ratio (+ 0 1/3)))
+       (is (instance? clojure.lang.Ratio (+ 0N 1/3)))
+       (is (instance? clojure.lang.Ratio (+ 1 1/3)))
+       (is (instance? clojure.lang.Ratio (+ 1N 1/3)))
+       ;; Note that we use `double?` here because JVM Clojure uses
+       ;; java.lang.Double instead of clojure.lang.Double and we'd
+       ;; like to keep this test as generic as possible.
+       (is (double? (+ 0.0 1/3)))
+       (is (double? (+ 1.0 1/3)))]))
+
+(deftest inf-nan
+  (are [sum x y] (and (= sum (+ x y))
+                      (= sum (+ y x))) ; addition should be commutative
+
+    ##Inf  1   ##Inf
+    ##Inf  1N  ##Inf
+    ##Inf  1.0 ##Inf
+    ##Inf  1/2 ##Inf
+    ##-Inf 1   ##-Inf
+    ##-Inf 1N  ##-Inf
+    ##-Inf 1.0 ##-Inf
+    ##-Inf 1/2 ##-Inf)
+
+  (are [x y] (and (NaN? (+ x y))
+                  (NaN? (+ y x)))
+    ##Inf  ##-Inf
+    1      ##NaN
+    1N     ##NaN
+    1.0    ##NaN
+    1/2    ##NaN
+    ##Inf  ##NaN
+    ##-Inf ##NaN
+    ##NaN  ##NaN)
+
+  (is (thrown? Exception (+ ##NaN nil)))
+  (is (thrown? Exception (+ ##Inf nil))))
