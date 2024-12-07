@@ -3,7 +3,8 @@
             [clojure.core-test.number-range :as r]))
 
 (deftest common
-  (are [sum addend summand] (= sum (+ addend summand))
+  (are [sum x y] (and (= sum (+ x y))
+                      (= sum (+ y x))) ; addition should be commutative
     0 0 0
     1 1 0
     1 0 1
