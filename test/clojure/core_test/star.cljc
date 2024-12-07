@@ -2,34 +2,25 @@
   (:require [clojure.test :as t :refer [deftest testing is are]]
             [clojure.core-test.number-range :as r]))
 
-(t/deftest common
-  (are [prod cand er] (= prod (* cand er))
+(deftest common
+  (are [prod x y] (= prod (* x y) (* y x))
     0 0 0
-    0 1 0
     0 0 1
     1 1 1
     5 1 5
-    5 5 1
     25 5 5
     -1 1 -1
-    -1 -1 1
     1 -1 -1
-    0 -1 0
     0 0 -1
     (inc r/min-int) r/max-int -1
-    (inc r/min-int) -1 r/max-int
 
     0.0 0.0 0.0
-    0.0 1.0 0.0
     0.0 0.0 1.0
     1.0 1.0 1.0
     5.0 1.0 5.0
-    5.0 5.0 1.0
     25.0 5.0 5.0
     -1.0 1.0 -1.0
-    -1.0 -1.0 1.0
     1.0 -1.0 -1.0
-    0.0 -1.0 0.0
     0.0 0.0 -1.0
 
     0.0 0.0 0
