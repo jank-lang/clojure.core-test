@@ -1,5 +1,5 @@
 (ns clojure.core-test.star
-  (:require [clojure.test :as t :refer [is are]]
+  (:require [clojure.test :as t :refer [deftest testing is are]]
             [clojure.core-test.number-range :as r]))
 
 (t/deftest common
