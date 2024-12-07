@@ -62,6 +62,10 @@
 
   (is (thrown? Exception (+ 1 nil)))
   (is (thrown? Exception (+ nil 1)))
+  (is (thrown? Exception (+ 1N nil)))
+  (is (thrown? Exception (+ nil 1N)))
+  (is (thrown? Exception (+ 1.0 nil)))
+  (is (thrown? Exception (+ nil 1.0)))
 
   #?@(:cljs nil
       :default
