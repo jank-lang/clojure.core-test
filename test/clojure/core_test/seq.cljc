@@ -17,9 +17,13 @@
           input-hash (into (hash-set) input)
           input-map {:a {:b "4"}
                      :c 800
-                     nil 40}]
+                     nil 40}
+          input-sorted-map (into (sorted-map) input-map)
+          input-hash-map (into (hash-map) input-map)]
       (is (= input (into #{} (seq input))))
       (is (= input-hash (into (hash-set) (seq input))))
+      (is (= input-sorted-map (into (sorted-map) (seq input-sorted-map))))
+      (is (= input-hash-map (into (hash-map) (seq input-hash-map))))
       (is (= input-map (into {} (seq input-map))))))
   (testing "nonseqables"
     (is (thrown? IllegalArgumentException (seq 1)))
