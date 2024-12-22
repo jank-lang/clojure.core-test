@@ -9,14 +9,17 @@
     '(:a :b :c :d) '(:a :b :c :d)
     '() nil
     nil nil
+    (sorted-set 3.0 1.0 -2.5 4.0) '(-2.5 1.0 3.0 4.0)
     (range 5 10) '(5 6 7 8 9)
     (int-array 3) '(0 0 0))
   (testing "sets and maps"
     (let [input #{440M 55000M 80000}
+          input-hash (into (hash-set) input)
           input-map {:a {:b "4"}
                      :c 800
                      nil 40}]
       (is (= input (into #{} (seq input))))
+      (is (= input-hash (into (hash-set) (seq input))))
       (is (= input-map (into {} (seq input-map))))))
   (testing "nonseqables"
     (is (thrown? IllegalArgumentException (seq 1)))
