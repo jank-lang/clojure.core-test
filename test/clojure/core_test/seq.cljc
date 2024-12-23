@@ -27,4 +27,8 @@
       (is (= input-map (into {} (seq input-map))))))
   (testing "nonseqables"
     (is (thrown? IllegalArgumentException (seq 1)))
-    (is (thrown? IllegalArgumentException (seq (fn []))))))
+    (is (thrown? IllegalArgumentException (seq (fn [])))))
+  (testing "infinite sequences are produced by seq"
+    (let [infinite-seq (seq (range))]
+      (is (seq? infinite-seq))
+      (is (= (range 10000) (take 10000 infinite-seq))))))
