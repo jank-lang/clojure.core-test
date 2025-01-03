@@ -1,6 +1,5 @@
 (ns clojure.core-test.slash
-  (:require [clojure.test :as t :refer [deftest testing is are]]
-            [clojure.core-test.number-range :as r]))
+  (:require [clojure.test :as t :refer [deftest testing is are]]))
 
 (deftest common
   (are [expected x y] (= expected (/ x y))
