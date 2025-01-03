@@ -1,5 +1,6 @@
 (ns clojure.core-test.minus
-  (:require [clojure.test :as t :refer [deftest testing is are]]))
+  (:require [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.number-range :as r]))
 
 (deftest common
   (are [expected x y] (= expected (- x y))
