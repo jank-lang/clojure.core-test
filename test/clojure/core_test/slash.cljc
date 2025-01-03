@@ -109,6 +109,13 @@
     -1.0M -1.0M 1.0M
     1.0M  -1.0M -1.0M)
 
+  ;; Single arg 
+  (is (= 1/2 (/ 2)))
+  (is (= 0.5 (/ 2.0)))
+
+  ;; Multi arg
+  (is (= 1/362880 (/ 1 2 3 4 5 6 7 8 9)))
+
   (is (thrown? Exception (/ 1 0)))
   (is (thrown? Exception (/ nil 1)))
   (is (thrown? Exception (/ 1 nil))))
@@ -125,6 +132,13 @@
     0.25  1/2  2.0
     4M    2.0M 1/2
     0.25M 1/2  2.0M)
+
+  ;; Single arg
+  (is (= 2N (/ 1/2)))
+  (is (= 3N (/ 1/3)))
+
+  ;; Multi arg
+  (is (= 362880N (/ 1/1 1/2 1/3 1/4 1/5 1/6 1/7 1/8 1/9)))
 
   (is (thrown? Exception (/ 1/2 nil)))
   (is (thrown? Exception (/ nil 1/2))))

@@ -67,6 +67,9 @@
   (is (= -3 (- 3)))
   (is (= 3 (- -3)))
 
+  ;; Multi-arg
+  (is (= -45 (- 0 1 2 3 4 5 6 7 8 9)))
+
   (is (thrown? Exception (- nil 1)))
   (is (thrown? Exception (- 1 nil)))
   (is (thrown? Exception (- nil 1N)))
@@ -121,6 +124,9 @@
   ;; Single arg
   (is (= -1/2 (- 1/2)))
   (is (= 1/2 (- -1/2)))
+
+  ;; Multi arg
+  (is (= -2089/2520 (- 1 1/2 1/3 1/4 1/5 1/6 1/7 1/8 1/9)))
 
   (is (thrown? Exception (- nil 1/2)))
   (is (thrown? Exception (- 1/2 nil)))
