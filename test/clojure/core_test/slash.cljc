@@ -109,6 +109,9 @@
     -1.0M -1.0M 1.0M
     1.0M  -1.0M -1.0M)
 
+  ;; Zero arg
+  (is (thrown? Exception (/)))
+
   ;; Single arg 
   (is (= 1/2 (/ 2)))
   (is (= 0.5 (/ 2.0)))
