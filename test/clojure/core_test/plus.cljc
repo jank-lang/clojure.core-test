@@ -59,6 +59,16 @@
     6N 1N 5
     6N 1N 5N)
 
+  ;; Zero arg
+  (is (= 0 (+)))
+
+  ;; One arg
+  (is (= 1 (+ 1)))
+  (is (= 2 (+ 2)))
+
+  ;; Multi arg
+  (is (= 45 (+ 0 1 2 3 4 5 6 7 8 9)))
+
 
   (is (thrown? Exception (+ 1 nil)))
   (is (thrown? Exception (+ nil 1)))

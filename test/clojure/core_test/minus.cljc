@@ -64,6 +64,9 @@
     5.0M  10.0M 5.0M
     -1.0M 1.0M  2.0M)
 
+  ;; Zero arg
+  (is (thrown? Exception (-)))
+
   ;; Single arg
   (is (= -3 (- 3)))
   (is (= 3 (- -3)))
