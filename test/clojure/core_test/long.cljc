@@ -7,7 +7,7 @@
   ;; but there is no predicate for it. Here, we just test whether it's
   ;; a fixed-length integer of some sort.
   (is (int? (int 0)))
-  #?@(:cljs nil
+  #?@(:cljs []
       :default
       [(is (instance? java.lang.Long (long 0)))])
 
@@ -25,10 +25,11 @@
     1    1.1
     -1   -1.1
     1    1.9
-    1    3/2
-    -1   -3/2
-    0    1/10
-    0    -1/10
+    #?@(:cljs []
+        :default [1    3/2
+                  -1   -3/2
+                  0    1/10
+                  0    -1/10])
     1    1.1M
     -1   -1.1M)
 

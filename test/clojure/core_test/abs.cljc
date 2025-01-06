@@ -13,7 +13,8 @@
          ##Inf ##Inf
          -123.456M 123.456M
          -123N 123N
-         -1/5 1/5)
+         #?@(:cljs []
+             :default [-1/5 1/5]))
   (t/is (NaN? (abs ##NaN))))
 
 (t/deftest unboxed

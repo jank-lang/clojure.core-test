@@ -2,7 +2,7 @@
   (:require [clojure.test :as t :refer [deftest testing is are]]))
 
 (deftest test-num
-  #?@(:cljs nil
+  #?@(:cljs []
       :default
       ;; The compiler should pass `x` as a primitive to `num`.
       [(let [x 1.0]

@@ -26,3 +26,32 @@ the test suite whenever you save new changes.
 ```bash
 $ lein test-refresh
 ```
+## Running the clojurescript tests
+
+First, make sure you haev node 23 or greater.
+
+Install the node dependencies:
+
+```bash
+npm install
+```
+
+Compile the tests:
+
+```bash
+npx shadow-cljs compile test
+```
+
+Once tests are compiled they can be ran with:
+
+```bash
+node target/js/node-tests.js
+```
+
+### Automated test running during development
+
+If you want to autorun the tests during development run the following:
+
+```bash
+npx shadow-cljs watch test
+```

@@ -10,16 +10,17 @@
     (float 1.0) 1N
     (float 0.0) 0N
     (float -1.0) -1N
-    (float 1.0) 12/12
-    (float 0.0) 0/12
-    (float -1.0) -12/12
+    #?@(:cljs []
+        :default [(float 1.0) 12/12
+                  (float 0.0) 0/12
+                  (float -1.0) -12/12])
     (float 1.0) 1.0M
     (float 0.0) 0.0M
     (float -1.0) -1.0M
     (float 0.0) r/min-double)
   (is (NaN? (float ##NaN)))
 
-  #?@(:cljs nil
+  #?@(:cljs []
       :default
       [(is (instance? java.lang.Float (float 0)))
        (is (instance? java.lang.Float (float 0.0)))

@@ -12,13 +12,14 @@
     1M    1.0
     0M    0.0
     -1M   -1.0
-    0.5M  1/2
-    0M    0/2
-    -0.5M -1/2)
+    #?@(:cljs []
+        :default [0.5M 1/2
+                  0M   0/2
+                  -0.5M -1/2]))
 
   ;; `bigdec` must produce objects that satisfy `decimal?`
   (is (decimal? (bigdec 1)))
 
-  #?@(:cljs nil
+  #?@(:cljs []
       :default
       [(is (instance? java.math.BigDecimal (bigdec 1)))]))

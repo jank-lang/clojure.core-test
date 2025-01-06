@@ -55,3 +55,40 @@ jobs:
 
       - name: Run Tests
         run: lein test
+  clojurescript:
+    strategy:
+      matrix:
+        # Uncomment to enable all of them
+        # os: [ubuntu-latest, macOS-latest, windows-latest]
+        os: [ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # It is important to install java before installing clojure tools which needs java
+      # exclusions: babashka, clj-kondo and cljstyle
+      - name: Prepare java
+        uses: actions/setup-java@v3
+        with:
+          distribution: "zulu"
+          java-version: "17"
+
+      - name: Prepare node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "23.x"
+          check-latest: true
+          cache: 'npm'
+          cache-dependency-path: "package-lock.json"
+
+      - name: Install Node Dependencies
+        run: npm ci
+
+      - name: Compile Tests
+        run: npm run build
+
+      - name: Run Tests
+        run: npm test

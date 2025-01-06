@@ -11,7 +11,8 @@
     false 0
     false 0N
     false 0.0
-    false 1/2
+    #?@(:cljs []
+        :default [false 1/2])
     false 0.0M
     false false
     false true

@@ -20,9 +20,10 @@
     true  0N
     true  1N
     true  -1N
-    true  0/2                           ; perhaps surprising
-    false 1/2
-    false -1/2
+    #?@(:cljs []
+        :default [true 0/2      ; perhaps surprising
+                  false 1/2
+                  false -1/2])
     false 0.0M
     false 1.0M
     false -1.0M

@@ -1,0 +1,18 @@
+{
+  "name": "clojure.core-test",
+  "version": "1.0.0",
+  "description": "Node config for compiling tests to js",
+  "repository": "https://github.com/jank-lang/clojure.core-test",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "shadow-cljs release test",
+    "test": "node target/js/node-tests.js"
+  },
+  "author": "jeaye",
+  "license": "MPL 2.0",
+  "devDependencies": {
+    "shadow-cljs": "^2.28.20"
+  }
+}

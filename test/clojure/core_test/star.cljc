@@ -72,7 +72,7 @@
   (is (thrown? Exception (* 1 nil)))
   (is (thrown? Exception (* nil 1)))
 
-  #?@(:cljs nil
+  #?@(:cljs [nil]
       :default
       [(is (instance? clojure.lang.BigInt (* 0 1N)))
        (is (instance? clojure.lang.BigInt (* 0N 1)))
@@ -89,32 +89,34 @@
        (is (thrown? Exception (* (long (/ r/min-int 2)) 3)))
        (is (thrown? Exception (* 3 (long (/ r/min-int 2)))))]))
 
-(deftest rationals
-  (are [prod x y] (= prod (* x y) (* y x))
-    1     1/2  2/1
-    1     1/2  2
-    -1    1/2  -2
-    -1    -1/2 2
-    1     -1/2 -2
-    1.0   1/2  2.0
-    -1.0  1/2  -2.0
-    -1.0  -1/2 2.0
-    1.0   -1/2 -2.0
-    1     1/2  2N
-    -1    1/2  -2N
-    -1    -1/2 2N
-    1     -1/2 -2N
-    1.0   1/3  3.0
-    0     1/2  0
-    0.0   1/2  0.0
-    0     1/2  0N
-    1/10  1/2  1/5
-    -1/10 1/2  -1/5
-    -1/10 -1/2 1/5
-    1/10  -1/2 -1/5)
+#?(:cljs nil
+   :default
+   (deftest rationals
+     (are [prod x y] (= prod (* x y) (* y x))
+       1     1/2  2/1
+       1     1/2  2
+       -1    1/2  -2
+       -1    -1/2 2
+       1     -1/2 -2
+       1.0   1/2  2.0
+       -1.0  1/2  -2.0
+       -1.0  -1/2 2.0
+       1.0   -1/2 -2.0
+       1     1/2  2N
+       -1    1/2  -2N
+       -1    -1/2 2N
+       1     -1/2 -2N
+       1.0   1/3  3.0
+       0     1/2  0
+       0.0   1/2  0.0
+       0     1/2  0N
+       1/10  1/2  1/5
+       -1/10 1/2  -1/5
+       -1/10 -1/2 1/5
+       1/10  -1/2 -1/5)
 
-  (is (thrown? Exception (* 1/2 nil)))
-  (is (thrown? Exception (* nil 1/2))))
+     (is (thrown? Exception (* 1/2 nil)))
+     (is (thrown? Exception (* nil 1/2)))))
 
 (deftest inf-nan
   (testing "Multiplication with infinities"
@@ -122,20 +124,24 @@
       ##Inf  ##Inf  1
       ##Inf  ##Inf  1N
       ##Inf  ##Inf  1.0
-      ##Inf  ##Inf  1/2
+      #?@(:cljs []
+          :default [##Inf  ##Inf  1/2])
       ##Inf  ##Inf  2
       ##-Inf ##Inf  -1
       ##-Inf ##Inf  -1N
       ##-Inf ##Inf  -1.0
-      ##-Inf ##Inf  -1/2
+      #?@(:cljs []
+          :default [##-Inf ##Inf  -1/2])
       ##-Inf ##-Inf 1
       ##-Inf ##-Inf 1N
       ##-Inf ##-Inf 1.0
-      ##-Inf ##-Inf 1/2
+      #?@(:cljs []
+          :default [##-Inf ##-Inf 1/2])
       ##Inf  ##-Inf -1
       ##Inf  ##-Inf -1N
       ##Inf  ##-Inf -1.0
-      ##Inf  ##-Inf -1/2
+      #?@(:cljs []
+          :default [##Inf  ##-Inf -1/2])
       ##Inf  ##Inf  2
       ##Inf  ##Inf  ##Inf
       ##-Inf ##Inf  ##-Inf
@@ -152,9 +158,11 @@
       ##Inf 0                           ; Perhaps counter-intuitive
       ##Inf 0N
       ##Inf 0.0
-      ##Inf 0/2
+      #?@(:cljs []
+          :default [##Inf 0/2])
       ##NaN 1
       ##NaN 1N
       ##NaN 1.0
-      ##NaN 1/2)))
+      #?@(:cljs []
+          :default [##NaN 1/2]))))
 

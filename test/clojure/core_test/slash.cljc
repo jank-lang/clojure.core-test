@@ -110,41 +110,48 @@
     1.0M  -1.0M -1.0M)
 
   ;; Zero arg
-  (is (thrown? Exception (/)))
+  #?@(:cljs []
+      :default [(is (thrown? Exception (/)))])
 
   ;; Single arg 
-  (is (= 1/2 (/ 2)))
-  (is (= 0.5 (/ 2.0)))
+  #?@(:cljs []
+      :default [(is (= 1/2 (/ 2)))
+                (is (= 0.5 (/ 2.0)))])
 
   ;; Multi arg
-  (is (= 1/362880 (/ 1 2 3 4 5 6 7 8 9)))
+  #?@(:cljs []
+      :default [(is (= 1/362880 (/ 1 2 3 4 5 6 7 8 9)))])
 
   (is (thrown? Exception (/ 1 0)))
   (is (thrown? Exception (/ nil 1)))
   (is (thrown? Exception (/ 1 nil))))
 
-(deftest rationals
-  (are [expected x y] (= expected (/ x y))
-    10   10  1
-    5    10  2
-    10/3 10  3
-    1    2   2
-    4    2   1/2
-    1/4  1/2 2
-    4.0   2.0  1/2
-    0.25  1/2  2.0
-    4M    2.0M 1/2
-    0.25M 1/2  2.0M)
+#?(:cljs nil
+   :default
+   (deftest rationals
+     (are [expected x y] (= expected (/ x y))
+       10   10  1
+       5    10  2
+       10/3 10  3
+       1    2   2
+       4    2   1/2
+       1/4  1/2 2
+       4.0   2.0  1/2
+       0.25  1/2  2.0
+       4M    2.0M 1/2
+       0.25M 1/2  2.0M)
 
-  ;; Single arg
-  (is (= 2N (/ 1/2)))
-  (is (= 3N (/ 1/3)))
+    ;; Single arg
+     (is (= 2N (/ 1/2)))
+     (is (= 3N (/ 1/3)))
 
-  ;; Multi arg
-  (is (= 362880N (/ 1/1 1/2 1/3 1/4 1/5 1/6 1/7 1/8 1/9)))
+    ;; Multi arg
+     #?@(:cljs []
+         :default [(is (= 362880N (/ 1/1 1/2 1/3 1/4 1/5 1/6 1/7 1/8 1/9)))])
 
-  (is (thrown? Exception (/ 1/2 nil)))
-  (is (thrown? Exception (/ nil 1/2))))
+     #?@(:cljs []
+         :default [(is (thrown? Exception (/ 1/2 nil)))])
+     (is (thrown? Exception (/ nil 1/2)))))
 
 (deftest inf-nan
   (are [expected x y] (= expected (/ x y))
@@ -184,10 +191,11 @@
     ##Inf  ##Inf  0.0M              ; Surprisingly, these down't throw
     ##-Inf ##-Inf 0.0M
 
-    0.0 1/2  ##Inf
-    0.0 -1/2 ##Inf
-    0.0 1/2  ##-Inf
-    0.0 -1/2 ##-Inf)
+    #?@(:cljs []
+        :default [0.0 1/2  ##Inf
+                  0.0 -1/2 ##Inf
+                  0.0 1/2  ##-Inf
+                  0.0 -1/2 ##-Inf]))
 
   ;; These all result in ##NaN, but we can't test for that with `=`.
   (are [x y] (NaN? (/ x y))
@@ -199,8 +207,10 @@
     1.0    ##NaN
     ##NaN  1.0M
     1.0M   ##NaN
-    ##NaN  1/2
-    1/2    ##NaN
+    #?@(:cljs []
+        :default [##NaN  1/2])
+    #?@(:cljs []
+        :default [1/2    ##NaN])
     ##Inf  ##Inf
     ##Inf  ##-Inf
     ##-Inf ##Inf
