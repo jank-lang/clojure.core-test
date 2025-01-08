@@ -38,4 +38,6 @@
   (let [f (fn [] (binding [*x* :inside-f] (test-fn)))]
     (binding [*x* :outside-f]
       (t/is (= (test-fn) :outside-f))
-      (t/is (= (f)       :inside-f) "Nested in func-call"))))
+      (t/is (= (f)       :inside-f) "Nested in func-call")))
+  (binding [*y* (binding [*x* :bad] (test-fn))]
+    (t/is (= *y* :bad) "Binding in a binding vector")))
