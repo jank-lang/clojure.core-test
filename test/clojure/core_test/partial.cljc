@@ -4,7 +4,7 @@
 (defn test-fn [& args]
   (into [] args))
 
-(t/deftest test-partial []
+(t/deftest test-partial
   (let [simple-use (partial inc 2)]
     (t/is (= 3 (simple-use))))
   (let [lazily-evaluated (partial inc 2 3)]
