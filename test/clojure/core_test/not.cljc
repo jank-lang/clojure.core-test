@@ -1,15 +1,18 @@
 (ns clojure.core-test.not
   (:require
-   [clojure.test :as t]))
+   [clojure.test :as t :refer [deftest testing is are]]
+   [clojure.core-test.portability :as p]))
 
-(t/deftest common
-  (t/are [given expected] (= expected (not given))
-    nil true
-    true false
-    false true
-    #?(:clj (Object.)
-       :cljs #js {}
-       :default :anything) false))
+(p/when-var-exists clojure.core/not
+  (deftest test-not
+    (testing "common"
+      (are [given expected] (= expected (not given))
+        nil                    true
+        true                   false
+        false                  true
+        #?(:clj (Object.)
+           :cljs #js {}
+           :default :anything) false))
 
-(t/deftest infinite-sequence
-  (t/is (= false (not (range)))))
+    (testing "infinite-sequence"
+      (is (= false (not (range)))))))

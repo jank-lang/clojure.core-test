@@ -1,12 +1,14 @@
 (ns clojure.core-test.bit-flip
-  (:require [clojure.test :as t]))
+  (:require [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.portability :as p]))
 
-(t/deftest common
-  #?(:clj (t/is (thrown? NullPointerException (bit-flip nil 1)))
-     :cljs (t/is (bit-flip nil 1)))
-  #?(:clj (t/is (thrown? NullPointerException (bit-flip 1 nil)))
-     :cljs (t/is (bit-flip 1 nil)))
+(p/when-var-exists clojure.core/bit-flip
+  (deftest test-bit-flip
+    #?(:clj (is (thrown? NullPointerException (bit-flip nil 1)))
+       :cljs (is (bit-flip nil 1)))
+    #?(:clj (is (thrown? NullPointerException (bit-flip 1 nil)))
+       :cljs (is (bit-flip 1 nil)))
 
-  (t/are [ex a b] (= ex (bit-flip a b))
-         2r1111 2r1011 2
-         2r1011 2r1111 2))
+    (are [ex a b] (= ex (bit-flip a b))
+      2r1111 2r1011 2
+      2r1011 2r1111 2)))
