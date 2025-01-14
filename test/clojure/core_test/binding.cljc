@@ -7,7 +7,7 @@
 
 (defn test-fn [] *x*)
 
-(t/deftest test-binding
+(t/deftest ^:heavy test-binding
   ;; base-case with no overrides
   (t/is (= *x* :unset) "Unset is :unset")
   (t/is (= (*f* 1) 2)  "fn call")
@@ -47,6 +47,7 @@
     (binding [*x* :here]
       (t/is (= @f :here) "Delayed functions inherit there bindings when forced"))
     (t/is (= @f :here) "And value persists outside binding expression"))
+  (Thread/sleep 1)
   (let [f (future (test-fn))]
     (binding [*x* :now-here]
       (t/is (= @f :unset) "Thread context is separate from joining thread")))
@@ -60,4 +61,6 @@
                 (future (test-fn))))]
       (binding [*x* :derefer]
         (let [derefed-f @f]
-          (t/is (= :callee @derefed-f) "Binding in futures preserved."))))))
+          (t/is (= :callee @derefed-f) "Binding in futures preserved.")))))
+
+  (shutdown-agents))
