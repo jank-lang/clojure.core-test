@@ -1,6 +1,8 @@
 (ns clojure.core-test.format
-  (:require [clojure.test :as t :refer [deftest testing is are]]))
+  (:require [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.portability :as p]))
 
+(p/when-var-exists clojure.core/format
 ;;; Note that `format` presents a bit of a conundrum for
 ;;; testing. Clojure JVM delegates the formatting task to
 ;;; Java. ClojureScript doesn't implement `format`. Other Clojure
@@ -12,8 +14,7 @@
 ;;; characters passes through `format` unharmed.
 ;;; See: https://clojurians.slack.com/archives/C03SRH97FDK/p1733853098700809
 
-(deftest test-format
-  #?@(:cljs nil                         ; CLJS doesn't have `format`
-      :default
-      [(is (= "test" (format "test")))])
-  )
+ (deftest test-format
+   #?@(:cljs nil                        ; CLJS doesn't have `format`
+       :default
+       [(is (= "test" (format "test")))])))

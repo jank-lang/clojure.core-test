@@ -1,7 +1,7 @@
 (ns clojure.core-test.portability)
 
 (defmacro when-var-exists [var-sym & body]
-  `(let [s# ~var-sym
+  `(let [s# '~var-sym
          v# (resolve s#)]
      (if v#
        (do

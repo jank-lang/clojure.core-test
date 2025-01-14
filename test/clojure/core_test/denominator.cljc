@@ -2,7 +2,7 @@
   (:require [clojure.test :as t :refer [deftest testing is are]]
             [clojure.core-test.portability :as p]))
 
-(p/when-var-exists 'clojure.core/denominator
+(p/when-var-exists clojure.core/denominator
  (deftest test-denominator
    (is (= 2 (denominator 1/2)))
    (is (= 3 (denominator 2/3)))

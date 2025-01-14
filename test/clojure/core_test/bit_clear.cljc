@@ -1,11 +1,13 @@
 (ns clojure.core-test.bit-clear
-  (:require [clojure.test :as t]))
+  (:require [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.portability :as p]))
 
-(t/deftest common
-  #?(:clj (t/is (thrown? NullPointerException (bit-clear nil 1)))
-     :cljs (t/is (bit-clear nil 1)))
-  #?(:clj (t/is (thrown? NullPointerException (bit-clear 1 nil)))
-     :cljs (t/is (bit-clear 1 nil)))
+(p/when-var-exists clojure.core/bit-clear
+  (deftest test-bit-clear
+    #?(:clj (is (thrown? NullPointerException (bit-clear nil 1)))
+       :cljs (is (bit-clear nil 1)))
+    #?(:clj (is (thrown? NullPointerException (bit-clear 1 nil)))
+       :cljs (is (bit-clear 1 nil)))
 
-  (t/are [ex a b] (= ex (bit-clear a b))
-         3 11 3))
+    (are [ex a b] (= ex (bit-clear a b))
+      3 11 3)))
