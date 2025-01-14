@@ -1,13 +1,15 @@
 (ns clojure.core-test.binding
-  (:require [clojure.test :as t]))
+  (:require [clojure.test :as t]
+            [clojure.core-test.portability :as p]))
 
-(def  ^:dynamic *x* :unset)
-(def  ^:dynamic *y* nil)
-(defn ^:dynamic *f* [x] (inc x))
+(p/when-var-exists clojure.core/binding
+  (def  ^:dynamic *x* :unset)
+  (def  ^:dynamic *y* nil)
+  (defn ^:dynamic *f* [x] (inc x))
 
-(defn test-fn [] *x*)
+  (defn test-fn [] *x*)
 
-(t/deftest ^:heavy test-binding
+  (t/deftest ^:heavy test-binding
   ;; base-case with no overrides
   (t/is (= *x* :unset) "Unset is :unset")
   (t/is (= (*f* 1) 2)  "fn call")
@@ -63,4 +65,4 @@
         (let [derefed-f @f]
           (t/is (= :callee @derefed-f) "Binding in futures preserved.")))))
 
-  (shutdown-agents))
+  (shutdown-agents)))
