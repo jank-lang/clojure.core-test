@@ -9,7 +9,7 @@
 
   (defn test-fn [] *x*)
 
-  (t/deftest ^:heavy test-binding
+  (t/deftest test-binding
   ;; base-case with no overrides
   (t/is (= *x* :unset) "Unset is :unset")
   (t/is (= (*f* 1) 2)  "fn call")
@@ -63,6 +63,4 @@
                 (future (test-fn))))]
       (binding [*x* :derefer]
         (let [derefed-f @f]
-          (t/is (= :callee @derefed-f) "Binding in futures preserved.")))))
-
-  (shutdown-agents)))
+          (t/is (= :callee @derefed-f) "Binding in futures preserved.")))))))

@@ -296,7 +296,4 @@
                      {:key :s :old 23 :new 24 :tester 2}
                      {:key :g :old 25 :new 26 :tester 1}}
                    (disj (set @state) {:key :g :old 26 :new 27 :tester 1}))))
-          (println "Unexpected lack of error"))
-
-        (shutdown-agents))))
- )
+          (println "Unexpected lack of error"))))))

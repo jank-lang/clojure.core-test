@@ -4,6 +4,4 @@
   :license {:name "MPL 2.0"
             :url "https://www.mozilla.org/en-US/MPL/2.0/"}
   :dependencies [[org.clojure/clojure "1.11.1"]]
-  :plugins [[com.jakemccrary/lein-test-refresh "0.25.0"]]
-  :test-selectors {:default (complement :heavy)
-                   :heavy :heavy})
+  :plugins [[com.jakemccrary/lein-test-refresh "0.25.0"]])
