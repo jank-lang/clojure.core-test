@@ -21,6 +21,6 @@
     ;; `bigdec` must produce objects that satisfy `decimal?`
     (is (decimal? (bigdec 1)))
 
-    #?@(:cljs nil
+    #?@(:cljs []
         :default
         [(is (instance? java.math.BigDecimal (bigdec 1)))])))

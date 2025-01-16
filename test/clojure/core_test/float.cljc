@@ -21,7 +21,7 @@
      (float 0.0) r/min-double)
    (is (NaN? (float ##NaN)))
 
-   #?@(:cljs nil
+   #?@(:cljs []
        :default
        [(is (instance? java.lang.Float (float 0)))
         (is (instance? java.lang.Float (float 0.0)))

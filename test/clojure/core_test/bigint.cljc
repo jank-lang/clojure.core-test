@@ -22,7 +22,7 @@
     (is (= 9223372036854775808N (inc (bigint r/max-int)) (inc' r/max-int)))
     (is (= -9223372036854775809N (dec (bigint r/min-int)) (dec' r/min-int)))
 
-    #?@(:cljs nil
+    #?@(:cljs []
         :default
         [(is (instance? clojure.lang.BigInt (bigint 0)))
          (is (instance? clojure.lang.BigInt (bigint 0.0)))

@@ -15,6 +15,6 @@
 ;;; See: https://clojurians.slack.com/archives/C03SRH97FDK/p1733853098700809
 
  (deftest test-format
-   #?@(:cljs nil                        ; CLJS doesn't have `format`
+   #?@(:cljs []                        ; CLJS doesn't have `format`
        :default
        [(is (= "test" (format "test")))])))

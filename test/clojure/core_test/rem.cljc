@@ -62,18 +62,20 @@
      double? -1.0 -10.0  -3.0M
      double? 1.0  10.0   -3.0M
 
-     p/big-int? 0N   3     1/2
-     ratio?     1/3  3     4/3
-     ratio?     7/2  37/2  15
-     p/big-int? 0N   3     -1/2
-     ratio?     1/3  3     -4/3
-     ratio?     7/2  37/2  -15
-     p/big-int? 0N   -3    1/2
-     ratio?     -1/3 -3    4/3
-     ratio?     -7/2 -37/2 15
-     p/big-int? 0N   -3    -1/2
-     ratio?     -1/3 -3    -4/3
-     ratio?     -7/2 -37/2 -15)
+    #?@(:cljs []
+        :default
+        [p/big-int?   0N   3     1/2
+         ratio?     1/3  3     4/3
+         ratio?     7/2  37/2  15
+         p/big-int?   0N   3     -1/2
+         ratio?     1/3  3     -4/3
+         ratio?     7/2  37/2  -15
+         p/big-int?   0N   -3    1/2
+         ratio?     -1/3 -3    4/3
+         ratio?     -7/2 -37/2 15
+         p/big-int?   0N   -3    -1/2
+         ratio?     -1/3 -3    -4/3
+         ratio?     -7/2 -37/2 -15]))
 
    (is (thrown? Exception (rem 10 0)))
    (is (thrown? Exception (rem ##Inf 1))) ; surprising since (/ ##Inf 1) = ##Inf

@@ -4,7 +4,7 @@
 
 (p/when-var-exists clojure.core/num
  (deftest test-num
-   #?@(:cljs nil
+   #?@(:cljs []
        :default
        ;; The compiler should pass `x` as a primitive to `num`.
        [(let [x 1.0]

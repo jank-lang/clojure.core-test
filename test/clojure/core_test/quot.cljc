@@ -62,19 +62,20 @@
      double? 3.0  -10.0  -3.0M
      double? -3.0 10.0   -3.0M
 
-     ;; Anything with a ratio seems to convert to BigInt
-     p/big-int? 6N  3     1/2
-     p/big-int? 2N  3     4/3
-     p/big-int? 1N  37/2  15
-     p/big-int? -6N 3     -1/2
-     p/big-int? -2N 3     -4/3
-     p/big-int? -1N 37/2  -15
-     p/big-int? -6N -3    1/2
-     p/big-int? -2N -3    4/3
-     p/big-int? -1N -37/2 15
-     p/big-int? 6N  -3    -1/2
-     p/big-int? 2N  -3    -4/3
-     p/big-int? 1N  -37/2 -15
+    ;; Anything with a ratio seems to convert to BigInt
+    #?@(:cljs []
+        :default [p/big-int? 6N  3     1/2
+                  p/big-int? 2N  3     4/3
+                  p/big-int? 1N  37/2  15
+                  p/big-int? -6N 3     -1/2
+                  p/big-int? -2N 3     -4/3
+                  p/big-int? -1N 37/2  -15
+                  p/big-int? -6N -3    1/2
+                  p/big-int? -2N -3    4/3
+                  p/big-int? -1N -37/2 15
+                  p/big-int? 6N  -3    -1/2
+                  p/big-int? 2N  -3    -4/3
+                  p/big-int? 1N  -37/2 -15])
 
      double? 0.0 1 ##Inf
      double? 0.0 1 ##-Inf)

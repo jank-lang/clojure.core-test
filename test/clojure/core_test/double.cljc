@@ -19,7 +19,7 @@
      (double -1.0) -1.0M)
    (is (NaN? (double ##NaN)))
 
-   #?@(:cljs nil
+   #?@(:cljs []
        :default
        [(is (instance? java.lang.Double (double 0)))
         (is (instance? java.lang.Double (double 0.0)))
