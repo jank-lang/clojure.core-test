@@ -4,7 +4,7 @@
 
 (p/when-var-exists clojure.core/rand-int
   (deftest test-rand-int
-    ;; Generally, we test that the numbers returned pass `double?` and
+    ;; Generally, we test that the numbers returned pass `int?` and
     ;; that they are unique. Note that in theory `rand` could return
     ;; the same double in the first 100 attempts, but this is highly
     ;; unlikely.
