@@ -55,3 +55,18 @@ If you want to autorun the tests during development run the following:
 ```bash
 npx shadow-cljs watch test
 ```
+
+### Automated test running for a single namespace
+
+If you only want to autorun specific test files you may run the following:
+
+```bash
+npx shadow-cljs watch app --config-merge '{:autorun false}'
+```
+
+In another terminal, run the following, multiple namespaces are comma (,)
+separated.
+
+```bash
+npx nodemon -w target/js taget/js/node-tests.js --test=clojure.core-test.int-questionmark
+```

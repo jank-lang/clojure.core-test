@@ -11,25 +11,28 @@
      true  -1
      true  r/max-int
      true  r/min-int
-     false 0.0
-     false 1.0
-     false -1.0
+     #?@(:cljs [true] :default [false]) 0.0
+     #?@(:cljs [true] :default [false]) 1.0
+     #?@(:cljs [true] :default [false]) -1.0
+     false 0.1
+     false 1.1
+     false -1.1
      false r/max-double
      false r/min-double
      false ##Inf
      false ##-Inf
      false ##NaN
-     false 0N
-     false 1N
-     false -1N
+     #?@(:cljs [true] :default [false]) 0N
+     #?@(:cljs [true] :default [false]) 1N
+     #?@(:cljs [true] :default [false]) -1N
      #?@(:cljs []
          :default
          [true  0/2                          ; perhaps surprising
           false 1/2
           false -1/2])
-     false 0.0M
-     false 1.0M
-     false -1.0M
+     #?@(:cljs [true] :default [false]) 0.0M
+     #?@(:cljs [true] :default [false]) 1.0M
+     #?@(:cljs [true] :default [false]) -1.0M
      false nil
      false true
      false false
