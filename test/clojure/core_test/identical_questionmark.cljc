@@ -1,8 +1,9 @@
 (ns clojure.core-test.identical-questionmark
-  (:require [clojure.test :as t :refer [deftest testing is are]]
-            [clojure.core-test.portability :as p]))
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/identical?
+(when-var-exists clojure.core/identical?
  (deftest test-identical?
    ;; objects that are the same object are identical
    (let [x (hash-map)

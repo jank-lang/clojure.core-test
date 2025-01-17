@@ -1,9 +1,10 @@
 (ns clojure.core-test.not
   (:require
+   #?(:cljs  [cljs.reader])
    [clojure.test :as t :refer [deftest testing is are]]
-   [clojure.core-test.portability :as p]))
+   [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/not
+(when-var-exists clojure.core/not
   (deftest test-not
     (testing "common"
       (are [given expected] (= expected (not given))

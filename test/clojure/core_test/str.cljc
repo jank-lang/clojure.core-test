@@ -1,8 +1,9 @@
 (ns clojure.core-test.str
-  (:require [clojure.test :as t :refer [deftest testing is are]]
-            [clojure.core-test.portability :as p]))
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/str
+(when-var-exists clojure.core/str
  (deftest test-str
    (are [expected x] (= expected (str x))
      "0"            0
@@ -24,9 +25,11 @@
      "0"            0N
      "1"            1N
      "-1"           -1N
-     "0"            0/2
-     "1/2"          1/2
-     "-1/2"         -1/2
+     #?@(:cljs []
+         :default
+         ["0"            0/2
+          "1/2"          1/2
+          "-1/2"         -1/2])
      "0.0"          0.0M
      "1.0"          1.0M
      "-1.0"         -1.0M

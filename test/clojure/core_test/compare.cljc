@@ -1,8 +1,9 @@
 (ns clojure.core-test.compare
-  (:require [clojure.test :as t :refer [deftest testing is are]]
-            [clojure.core-test.portability :as p]))
+  (:require #?(:cljs [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/compare
+(when-var-exists clojure.core/compare
  (deftest test-compare
    (testing "numeric-types"
      (are [r args] (= r (compare (first args) (second args)))
@@ -10,12 +11,14 @@
        0  [0  0]
        1  [0 -100N]
        0  [1  1.0]
-       -1 [1  100/3]
+       #?@(:cljs []
+           :default
+           [-1 [1  100/3]])
        -1 [0  0x01]
        -1 [0  2r01]
        1  [1  nil])
 
-     (is (thrown? Exception (compare 1 []))))
+     (is (thrown? #?(:cljs :default :clj Exception) (compare 1 []))))
 
   (testing "lexical-types"
     (are [r args] (= r (compare (first args) (second args)))
@@ -29,8 +32,8 @@
       -1 [:cat  :animal/cat]
       1  ['a    nil])
 
-    (is (thrown? Exception (compare "a" [])))
-    (is (thrown? Exception (compare "cat" '(\c \a \t)))))
+    (is (thrown? #?(:cljs :default :clj Exception) (compare "a" [])))
+    (is (thrown? #?(:cljs :default :clj Exception) (compare "cat" '(\c \a \t)))))
 
   (testing "collection-types"
     (are [r args] (= r (compare (first args) (second args)))
@@ -47,12 +50,12 @@
       0  ['()         '()]
       1  [[]          nil])
 
-    (is (thrown? Exception (compare []  '())))
-    (is (thrown? Exception (compare [1] [[]])))
-    (is (thrown? Exception (compare []  {})))
-    (is (thrown? Exception (compare []  #{})))
-    (is (thrown? Exception (compare #{} (sorted-set))))
-    (is (thrown? Exception (compare #{1} #{1})))
-    (is (thrown? Exception (compare {1 2} {1 2})))
-    (is (thrown? Exception (compare (range 5) (range 5))))
-    (is (thrown? Exception (compare (range 5) (range)))))))
+    (is (thrown? #?(:cljs :default :clj Exception) (compare []  '())))
+    (is (thrown? #?(:cljs :default :clj Exception) (compare [1] [[]])))
+    (is (thrown? #?(:cljs :default :clj Exception) (compare []  {})))
+    (is (thrown? #?(:cljs :default :clj Exception) (compare []  #{})))
+    (is (thrown? #?(:cljs :default :clj Exception) (compare #{} (sorted-set))))
+    (is (thrown? #?(:cljs :default :clj Exception) (compare #{1} #{1})))
+    (is (thrown? #?(:cljs :default :clj Exception) (compare {1 2} {1 2})))
+    (is (thrown? #?(:cljs :default :clj Exception) (compare (range 5) (range 5))))
+    (is (thrown? #?(:cljs :default :clj Exception) (compare (range 5) (range)))))))

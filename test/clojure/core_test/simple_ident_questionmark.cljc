@@ -1,8 +1,9 @@
 (ns clojure.core-test.simple-ident-questionmark
-  (:require [clojure.test :as t :refer [deftest testing is are]]
-            [clojure.core-test.portability :as p]))
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/simple-ident?
+(when-var-exists clojure.core/simple-ident?
  (deftest test-simple-ident?
    (are [expected x] (= expected (simple-ident? x))
      true  :a-keyword
@@ -13,7 +14,9 @@
      false 0
      false 0N
      false 0.0
-     false 1/2
+     #?@(:cljs []
+         :default
+         [false 1/2])
      false 0.0M
      false false
      false true

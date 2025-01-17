@@ -1,8 +1,9 @@
 (ns clojure.core-test.nan-questionmark
-  (:require [clojure.test :as t :refer [deftest testing is are]]
-            [clojure.core-test.portability :as p]))
+  (:require #?(:cljs [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/NaN?
+(when-var-exists clojure.core/NaN?
  (deftest test-NaN?
    (is (thrown? Exception (NaN? nil)))
    (is (thrown? Exception (NaN? "##NaN")))

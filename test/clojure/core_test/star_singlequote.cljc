@@ -1,9 +1,10 @@
 (ns clojure.core-test.star-singlequote
-  (:require [clojure.test :as t :refer [deftest testing is are]]
+  (:require #?(:cljs [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
             [clojure.core-test.number-range :as r]
-            [clojure.core-test.portability :as p]))
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/*'
+(when-var-exists clojure.core/*'
   (deftest test-*'
     (are [prod cand er] (= prod (*' cand er))
       0 0 0

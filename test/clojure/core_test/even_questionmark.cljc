@@ -1,8 +1,9 @@
 (ns clojure.core-test.even-questionmark
-  (:require [clojure.test :as t :refer [deftest testing is are]]
-            [clojure.core-test.portability :as p]))
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/even?
+(when-var-exists clojure.core/even?
   (deftest test-even?
     (testing "common"
       (are [in ex] (= (even? in) ex)
@@ -24,5 +25,7 @@
         ##-Inf
         ##NaN
         1.5
-        1/2
+        #?@(:cljs []
+            :default
+            [1/2])
         0.2M))))

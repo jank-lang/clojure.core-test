@@ -1,8 +1,9 @@
 (ns clojure.core-test.seq
-  (:require [clojure.test :as t :refer [deftest testing is are]]
-            [clojure.core-test.portability :as p]))
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/seq
+(when-var-exists clojure.core/seq
  (deftest test-seq
    ;; Sourced via canSeq https://github.com/clojure/clojure/blob/master/src/jvm/clojure/lang/RT.java#L581
    (are [in expected] (= expected (seq in))
@@ -28,8 +29,8 @@
        (is (= input-hash-map (into (hash-map) (seq input-hash-map))))
        (is (= input-map (into {} (seq input-map))))))
    (testing "nonseqables"
-     (is (thrown? IllegalArgumentException (seq 1)))
-     (is (thrown? IllegalArgumentException (seq (fn [])))))
+     (is (thrown? #?(:cljs :default :clj IllegalArgumentException) (seq 1)))
+     (is (thrown? #?(:cljs :default :clj IllegalArgumentException) (seq (fn [])))))
    (testing "infinite sequences are produced by seq"
      (let [infinite-seq (seq (range))]
        (is (seq? infinite-seq))

@@ -1,8 +1,9 @@
 (ns clojure.core-test.min
-  (:require [clojure.test :as t :refer [deftest testing is are]]
-            [clojure.core-test.portability :as p]))
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/min
+(when-var-exists clojure.core/min
  (deftest test-min
    (are [expected x y] (= expected (min x y) (min y x))
      1      1   2
@@ -12,7 +13,9 @@
      1.0    1.0 2.0
      1      1   2.0
      1.0    1.0 2
-     1/2    1/2 1
+     #?@(:cljs []
+         :default
+         [1/2    1/2 1])
      1      1   ##Inf
      ##-Inf 1   ##-Inf
      ##-Inf ##-Inf ##Inf)
@@ -34,6 +37,6 @@
    (is (NaN? (min ##-Inf ##NaN ##Inf)))
    (is (NaN? (min ##NaN)))
 
-   (is (thrown? Exception (min "x" "y")))
-   (is (thrown? Exception (min nil 1)))
-   (is (thrown? Exception (min 1 nil)))))
+   (is (thrown? #?(:cljs :default :clj Exception) (min "x" "y")))
+   (is (thrown? #?(:cljs :default :clj Exception) (min nil 1)))
+   (is (thrown? #?(:cljs :default :clj Exception) (min 1 nil)))))

@@ -1,8 +1,9 @@
 (ns clojure.core-test.dec
-  (:require [clojure.test :as t :refer [deftest testing is are]]
-            [clojure.core-test.portability :as p]))
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/dec
+(when-var-exists clojure.core/dec
   (deftest test-dec
     (testing "common"
       (are [in ex] (= (dec in) ex)
@@ -13,8 +14,10 @@
         14412  14411
         -3     -4
         7.4    6.4                      ; risky
-        3/2    1/2
-        1/2    -1/2
+        #?@(:cljs []
+            :default
+            [3/2    1/2
+             1/2    -1/2])
         ##Inf  ##Inf
         ##-Inf ##-Inf)
 

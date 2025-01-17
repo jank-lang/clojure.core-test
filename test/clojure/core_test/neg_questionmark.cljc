@@ -1,9 +1,10 @@
 (ns clojure.core-test.neg-questionmark
-  (:require [clojure.test :as t :refer [deftest testing is are]]
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
             [clojure.core-test.number-range :as r]
-            [clojure.core-test.portability :as p]))
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/neg?
+(when-var-exists clojure.core/neg?
  (deftest test-neg?
    (are [expected x] (= expected (neg? x))
      false 0
@@ -22,13 +23,15 @@
      false 0N
      false 1N
      true  -1N
-     false 0/2
-     false 1/2
-     true  -1/2
+     #?@(:cljs []
+         :default
+         [false 0/2
+          false 1/2
+          true  -1/2])
      false 0.0M
      false 1.0M
      true  -1.0M)
 
-   (is (thrown? Exception (neg? nil)))
-   (is (thrown? Exception (neg? false)))
-   (is (thrown? Exception (neg? true)))))
+   (is (thrown? #?(:cljs :default :clj Exception) (neg? nil)))
+   (is (thrown? #?(:cljs :default :clj Exception) (neg? false)))
+   (is (thrown? #?(:cljs :default :clj Exception) (neg? true)))))

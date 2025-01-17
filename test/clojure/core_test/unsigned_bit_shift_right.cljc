@@ -1,8 +1,9 @@
 (ns clojure.core-test.unsigned-bit-shift-right
-  (:require [clojure.test :as t :refer [deftest testing is are]]
-            [clojure.core-test.portability :as p]))
+  (:require #?(:cljs [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer) [when-var-exists]]))
 
-(p/when-var-exists clojure.core/unsigned-bit-shift-right
+(when-var-exists clojure.core/unsigned-bit-shift-right
  (deftest test-unsigned-bit-shift-right
    #?(:clj (is (thrown? NullPointerException (unsigned-bit-shift-right nil 1)))
       :cljs (is (unsigned-bit-shift-right nil 1)))

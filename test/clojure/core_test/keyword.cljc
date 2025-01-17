@@ -1,8 +1,9 @@
 (ns clojure.core-test.keyword
-  (:require [clojure.test :as t :refer [deftest testing is are]]
-            [clojure.core-test.portability :as p]))
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/keyword
+(when-var-exists clojure.core/keyword
  (deftest test-keyword
    ;; "Symbols begin with a non-numeric character and can contain
    ;; alphanumeric characters and *, +, !, -, _, ', ?, <, > and =

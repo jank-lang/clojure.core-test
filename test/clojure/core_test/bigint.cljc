@@ -1,22 +1,25 @@
 (ns clojure.core-test.bigint
-  (:require [clojure.test :as t :refer [deftest testing is are]]
+  (:require #?(:cljs [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
             [clojure.core-test.number-range :as r]
-            [clojure.core-test.portability :as p]))
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer) [when-var-exists]]))
 
-(p/when-var-exists clojure.core/bigint
+(when-var-exists clojure.core/bigint
   (deftest test-bigint
     (are [expected x] (= expected (bigint x))
       1N  1
       0N  0
       -1N -1
-      #?@(:cljs nil
+      #?@(:cljs []
           :clj [179769313486231570000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000N r/max-double])
       1N  1.0
       0N  0.0
       -1N -1.0
-      1N  12/12
-      0N  0/12
-      -1N -12/12)
+      #?@(:cljs []
+          :default
+          [1N  12/12
+           0N  0/12
+           -1N -12/12]))
 
     ;; Validate that we correctly promote from int to bigint with `inc'` and `dec'`.
     (is (= 9223372036854775808N (inc (bigint r/max-int)) (inc' r/max-int)))

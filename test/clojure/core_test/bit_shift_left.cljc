@@ -1,8 +1,9 @@
 (ns clojure.core-test.bit-shift-left
-  (:require [clojure.test :as t :refer [deftest testing is are]]
-            [clojure.core-test.portability :as p]))
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/bit-shift-left
+(when-var-exists clojure.core/bit-shift-left
   (deftest test-bit-shift-left
     #?(:clj (is (thrown? NullPointerException (bit-shift-left nil 1)))
        :cljs (is (bit-shift-left nil 1)))

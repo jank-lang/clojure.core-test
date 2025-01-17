@@ -1,8 +1,9 @@
 (ns clojure.core-test.symbol
-  (:require [clojure.test :as t :refer [deftest testing is are]]
-            [clojure.core-test.portability :as p]))
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/symbol
+(when-var-exists clojure.core/symbol
  (deftest test-symbol
    ;; "Symbols begin with a non-numeric character and can contain
    ;; alphanumeric characters and *, +, !, -, _, ', ?, <, > and =
@@ -13,7 +14,7 @@
    ;; keyword does not validate input strings for ns and name, and may
    ;; return improper keywords with undefined behavior for non-conformant
    ;; ns and name.
-  
+
    (are [expected name] (= expected (symbol name))
      'abc "abc"
      'abc 'abc
@@ -50,7 +51,7 @@
    (are [expected ns name] (= expected (symbol ns name))
      'abc/abc     "abc"     "abc"
      'abc.def/abc "abc.def" "abc"
-    
+
      '*/abc "*" "abc"
      '+/abc "+" "abc"
      '!/abc "!" "abc"
@@ -72,8 +73,8 @@
      'abc.def/= "abc.def" "="
 
      'abc*+!-_'?<>=/abc*+!-_'?<>= "abc*+!-_'?<>=" "abc*+!-_'?<>=")
-  
-   (is (thrown? Exception (symbol nil))) ; keyword returns nil
+
+   (is (thrown? #?(:cljs :default :clj Exception) (symbol nil))) ; keyword returns nil
    (is (= 'abc (symbol nil "abc"))) ; But if ns is nil, it just ignores it.
 
    ;; prints as 'abc/null but the null is really a nil. Since this is
@@ -81,10 +82,10 @@
    ;; how to test this case here. That's why it's commented out.
    ;; Note that `keyword` throws for this case.
    ;; (is (= 'abc/null (symbol "abc" nil)))
-  
+
    ;; Two arg version requires namespace and symbol to be a string, not
    ;; a symbol or keyword like the one arg version.
-   (is (thrown? Exception (symbol 'abc "abc")))
-   (is (thrown? Exception (symbol "abc" 'abc)))
-   (is (thrown? Exception (symbol :abc "abc")))
-   (is (thrown? Exception (symbol "abc" :abc)))))
+   (is (thrown? #?(:cljs :default :clj Exception) (symbol 'abc "abc")))
+   (is (thrown? #?(:cljs :default :clj Exception) (symbol "abc" 'abc)))
+   (is (thrown? #?(:cljs :default :clj Exception) (symbol :abc "abc")))
+   (is (thrown? #?(:cljs :default :clj Exception) (symbol "abc" :abc)))))

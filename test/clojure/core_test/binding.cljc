@@ -1,8 +1,9 @@
 (ns clojure.core-test.binding
-  (:require [clojure.test :as t]
-            [clojure.core-test.portability :as p]))
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t]
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/binding
+(when-var-exists clojure.core/binding
   (def  ^:dynamic *x* :unset)
   (def  ^:dynamic *y* nil)
   (defn ^:dynamic *f* [x] (inc x))

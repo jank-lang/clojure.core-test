@@ -1,9 +1,10 @@
 (ns clojure.core-test.boolean
-  (:require [clojure.test :as t :refer [deftest testing is are]]
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
             [clojure.core-test.number-range :as r]
-            [clojure.core-test.portability :as p]))
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/boolean
+(when-var-exists clojure.core/boolean
  (deftest test-boolean
    (are [expected x] (= expected (boolean x))
      true  0
@@ -28,9 +29,11 @@
      true  0N
      true  1N
      true  -1N
-     true  0/2
-     true  1/2
-     true  -1/2
+     #?@(:cljs []
+         :default
+         [true  0/2
+          true  1/2
+          true  -1/2])
      true  0.0M
      true  1.0M
      true  -1.0M

@@ -1,9 +1,9 @@
 (ns clojure.core-test.rem
-  (:require [clojure.test :as t :refer [deftest testing is are]]
-            [clojure.core-test.portability :as p]
-            [clojure.core-test.portability :as p]))
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.portability :as p #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/rem
+(when-var-exists clojure.core/rem
  (deftest test-rem
    (are [type-pred expected x y] (let [r (rem x y)]
                                    (and (type-pred r)
@@ -77,11 +77,11 @@
          ratio?     -1/3 -3    -4/3
          ratio?     -7/2 -37/2 -15]))
 
-   (is (thrown? Exception (rem 10 0)))
-   (is (thrown? Exception (rem ##Inf 1))) ; surprising since (/ ##Inf 1) = ##Inf
+   (is (thrown? #?(:cljs :default :clj Exception) (rem 10 0)))
+   (is (thrown? #?(:cljs :default :clj Exception) (rem ##Inf 1))) ; surprising since (/ ##Inf 1) = ##Inf
    (is (NaN? (rem 1 ##Inf)))
-   (is (thrown? Exception (rem ##-Inf 1))) ; surprising since (/ ##-Inf 1) = ##-Inf
+   (is (thrown? #?(:cljs :default :clj Exception) (rem ##-Inf 1))) ; surprising since (/ ##-Inf 1) = ##-Inf
    (is (NaN? (rem 1 ##-Inf)))
-   (is (thrown? Exception (rem ##NaN 1)))
-   (is (thrown? Exception (rem 1 ##NaN)))
-   (is (thrown? Exception (rem ##NaN 1)))))
+   (is (thrown? #?(:cljs :default :clj Exception) (rem ##NaN 1)))
+   (is (thrown? #?(:cljs :default :clj Exception) (rem 1 ##NaN)))
+   (is (thrown? #?(:cljs :default :clj Exception) (rem ##NaN 1)))))

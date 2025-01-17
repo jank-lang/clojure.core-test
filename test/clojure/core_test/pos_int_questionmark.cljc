@@ -1,9 +1,10 @@
 (ns clojure.core-test.pos-int-questionmark
-  (:require [clojure.test :as t :refer [deftest testing is are]]
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
             [clojure.core-test.number-range :as r]
-            [clojure.core-test.portability :as p]))
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/pos-int?
+(when-var-exists clojure.core/pos-int?
  (deftest test-pos-int?
    (are [expected x] (= expected (pos-int? x))
      false 0
@@ -22,9 +23,11 @@
      false 0N
      false 1N
      false -1N
-     false 0/2
-     false 1/2
-     false -1/2
+     #?@(:cljs []
+         :default
+         [false 0/2
+          false 1/2
+          false -1/2])
      false 0.0M
      false 1.0M
      false -1.0M

@@ -1,8 +1,9 @@
 (ns clojure.core-test.max
-  (:require [clojure.test :as t :refer [deftest testing is are]]
-            [clojure.core-test.portability :as p]))
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/max
+(when-var-exists clojure.core/max
  (deftest test-max
    (are [expected x y] (= expected (max x y) (max y x))
      2     1      2
@@ -12,7 +13,9 @@
      2.0   1.0    2.0
      2.0   1      2.0
      2     1.0    2
-     1     1/2    1
+     #?@(:cljs []
+         :default
+         [1     1/2    1])
      ##Inf 1      ##Inf
      1     1      ##-Inf
      ##Inf ##-Inf ##Inf)
@@ -34,6 +37,6 @@
    (is (NaN? (max ##-Inf ##NaN ##Inf)))
    (is (NaN? (max ##NaN)))
 
-   (is (thrown? Exception (max "x" "y")))
-   (is (thrown? Exception (max nil 1)))
-   (is (thrown? Exception (max 1 nil)))))
+   (is (thrown? #?(:cljs :default :clj Exception) (max "x" "y")))
+   (is (thrown? #?(:cljs :default :clj Exception) (max nil 1)))
+   (is (thrown? #?(:cljs :default :clj Exception) (max 1 nil)))))

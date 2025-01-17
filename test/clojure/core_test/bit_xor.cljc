@@ -1,9 +1,10 @@
 (ns clojure.core-test.bit-xor
-  (:require [clojure.test :as t :refer [deftest testing is are]]
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
             [clojure.core-test.number-range :as r]
-            [clojure.core-test.portability :as p]))
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/bit-xor
+(when-var-exists clojure.core/bit-xor
   (deftest test-bit-xor
     #?(:clj (is (thrown? NullPointerException (bit-xor nil 1)))
        :cljs (is (bit-xor nil 1)))

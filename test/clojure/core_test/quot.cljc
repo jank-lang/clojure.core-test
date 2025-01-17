@@ -1,9 +1,10 @@
 (ns clojure.core-test.quot
-  (:require [clojure.test :as t :refer [deftest testing is are]]
-            [clojure.core-test.portability :as p]
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]
             [clojure.core-test.portability :as p]))
 
-(p/when-var-exists clojure.core/quot
+(when-var-exists clojure.core/quot
  (deftest test-quot
    (are [type-pred expected x y] (let [r (quot x y)]
                                    (and (type-pred r)

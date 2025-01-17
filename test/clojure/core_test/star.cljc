@@ -1,9 +1,10 @@
 (ns clojure.core-test.star
-  (:require [clojure.test :as t :refer [deftest testing is are]]
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
             [clojure.core-test.number-range :as r]
-            [clojure.core-test.portability :as p]))
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/*
+(when-var-exists clojure.core/*
   (deftest test-*
     (testing "common"
       (are [prod x y] (= prod (* x y) (* y x))
@@ -72,10 +73,10 @@
       ;; Multi arg
       (is (= 362880 (* 1 2 3 4 5 6 7 8 9)))
 
-      (is (thrown? Exception (* 1 nil)))
-      (is (thrown? Exception (* nil 1)))
+      (is (thrown? #?(:cljs :default :clj Exception) (* 1 nil)))
+      (is (thrown? #?(:cljs :default :clj Exception) (* nil 1)))
 
-      #?@(:cljs nil
+      #?@(:cljs []
           :default
           [(is (instance? clojure.lang.BigInt (* 0 1N)))
            (is (instance? clojure.lang.BigInt (* 0N 1)))
@@ -92,32 +93,34 @@
            (is (thrown? Exception (* (long (/ r/min-int 2)) 3)))
            (is (thrown? Exception (* 3 (long (/ r/min-int 2)))))]))
 
-    (testing "rationals"
-      (are [prod x y] (= prod (* x y) (* y x))
-        1     1/2  2/1
-        1     1/2  2
-        -1    1/2  -2
-        -1    -1/2 2
-        1     -1/2 -2
-        1.0   1/2  2.0
-        -1.0  1/2  -2.0
-        -1.0  -1/2 2.0
-        1.0   -1/2 -2.0
-        1     1/2  2N
-        -1    1/2  -2N
-        -1    -1/2 2N
-        1     -1/2 -2N
-        1.0   1/3  3.0
-        0     1/2  0
-        0.0   1/2  0.0
-        0     1/2  0N
-        1/10  1/2  1/5
-        -1/10 1/2  -1/5
-        -1/10 -1/2 1/5
-        1/10  -1/2 -1/5)
+    #?(:cljs nil
+       :default
+       (testing "rationals"
+         (are [prod x y] (= prod (* x y) (* y x))
+              1     1/2  2/1
+              1     1/2  2
+              -1    1/2  -2
+              -1    -1/2 2
+              1     -1/2 -2
+              1.0   1/2  2.0
+              -1.0  1/2  -2.0
+              -1.0  -1/2 2.0
+              1.0   -1/2 -2.0
+              1     1/2  2N
+              -1    1/2  -2N
+              -1    -1/2 2N
+              1     -1/2 -2N
+              1.0   1/3  3.0
+              0     1/2  0
+              0.0   1/2  0.0
+              0     1/2  0N
+              1/10  1/2  1/5
+              -1/10 1/2  -1/5
+              -1/10 -1/2 1/5
+              1/10  -1/2 -1/5)
 
-      (is (thrown? Exception (* 1/2 nil)))
-      (is (thrown? Exception (* nil 1/2))))
+         (is (thrown? Exception (* 1/2 nil)))
+         (is (thrown? Exception (* nil 1/2)))))
 
     (testing "inf-nan"
       (testing "Multiplication with infinities"
@@ -125,20 +128,16 @@
           ##Inf  ##Inf  1
           ##Inf  ##Inf  1N
           ##Inf  ##Inf  1.0
-          ##Inf  ##Inf  1/2
           ##Inf  ##Inf  2
           ##-Inf ##Inf  -1
           ##-Inf ##Inf  -1N
           ##-Inf ##Inf  -1.0
-          ##-Inf ##Inf  -1/2
           ##-Inf ##-Inf 1
           ##-Inf ##-Inf 1N
           ##-Inf ##-Inf 1.0
-          ##-Inf ##-Inf 1/2
           ##Inf  ##-Inf -1
           ##Inf  ##-Inf -1N
           ##Inf  ##-Inf -1.0
-          ##Inf  ##-Inf -1/2
           ##Inf  ##Inf  2
           ##Inf  ##Inf  ##Inf
           ##-Inf ##Inf  ##-Inf
@@ -147,7 +146,13 @@
           ##Inf  ##Inf  r/max-int
           ##-Inf ##Inf  r/min-int
           ##Inf  ##Inf  r/max-double
-          ##Inf  ##Inf  r/min-double))
+          ##Inf  ##Inf  r/min-double
+          #?@(:cljs []
+              :default
+              [##Inf  ##Inf  1/2
+               ##-Inf ##Inf  -1/2
+               ##-Inf ##-Inf 1/2
+               ##Inf  ##-Inf -1/2])))
 
       (testing "Multiplication resulting in ##NaN"
         (are [x y] (and (NaN? (* x y))
@@ -155,8 +160,10 @@
           ##Inf 0                       ; Perhaps counter-intuitive
           ##Inf 0N
           ##Inf 0.0
-          ##Inf 0/2
           ##NaN 1
           ##NaN 1N
           ##NaN 1.0
-          ##NaN 1/2)))))
+          #?@(:cljs []
+              :default
+              [##Inf 0/2
+               ##NaN 1/2]))))))

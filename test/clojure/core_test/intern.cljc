@@ -1,8 +1,9 @@
 (ns clojure.core-test.intern
-  (:require [clojure.test :as t :refer [deftest testing is are]]
-            [clojure.core-test.portability :as p]))
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/intern
+(when-var-exists clojure.core/intern
  (deftest test-intern
    ;; Intern and bind
    (let [x-var (intern 'clojure.core-test.intern 'x 42)]

@@ -1,9 +1,10 @@
 (ns clojure.core-test.float
-  (:require [clojure.test :as t :refer [deftest testing is are]]
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
             [clojure.core-test.number-range :as r]
-            [clojure.core-test.portability :as p]))
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/float
+(when-var-exists clojure.core/float
  (deftest test-float
    (are [expected x] (= expected (float x))
      (float 1.0) 1

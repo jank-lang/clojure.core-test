@@ -1,9 +1,10 @@
 (ns clojure.core-test.rational-questionmark
-  (:require [clojure.test :as t :refer [deftest testing is are]]
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
             [clojure.core-test.number-range :as r]
-            [clojure.core-test.portability :as p]))
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/rational?
+(when-var-exists clojure.core/rational?
  (deftest test-rational?
    (are [expected x] (= expected (rational? x))
      true  0
@@ -22,9 +23,11 @@
      true  0N
      true  1N
      true  -1N
-     true  0/2                          ; perhaps surprising
-     true  1/2
-     true  -1/2
+     #?@(:cljs []
+         :default
+         [true  0/2                          ; perhaps surprising
+          true  1/2
+          true  -1/2])
      true  0.0M                         ; perhaps surprising
      true  1.0M                         ; perhaps surprising
      true  -1.0M                        ; perhaps surprising

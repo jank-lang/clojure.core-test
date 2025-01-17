@@ -15,3 +15,5 @@ pom.xml.asc
 /.lsp
 *~
 .*.swp
+/node_modules
+/.shadow-cljs

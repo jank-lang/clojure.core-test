@@ -1,12 +1,15 @@
-(ns clojure.core-test.portability)
+(ns clojure.core-test.portability
+  #?(:cljs (:require [cljs.analyzer.api])))
 
 (defmacro when-var-exists [var-sym & body]
-  `(let [s# '~var-sym
-         v# (resolve s#)]
-     (if v#
+  (let [cljs? (some? (:ns &env))
+        exists? (boolean (if cljs?
+                           ((resolve 'cljs.analyzer.api/resolve) &env var-sym)
+                           (resolve var-sym)))]
+    `(if ~exists?
        (do
          ~@body)
-       (println "SKIP -" s#))))
+       (println "SKIP -" '~var-sym))))
 
 (defn big-int? [n]
   (and (integer? n)

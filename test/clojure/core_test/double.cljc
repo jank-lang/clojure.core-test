@@ -1,8 +1,9 @@
 (ns clojure.core-test.double
-  (:require [clojure.test :as t :refer [deftest testing is are]]
-            [clojure.core-test.portability :as p]))
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/double
+(when-var-exists clojure.core/double
  (deftest test-double
    (are [expected x] (= expected (double x))
      (double 1.0) 1

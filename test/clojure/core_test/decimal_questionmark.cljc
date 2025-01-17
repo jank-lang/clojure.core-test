@@ -1,9 +1,10 @@
 (ns clojure.core-test.decimal-questionmark
-  (:require [clojure.test :as t :refer [deftest testing is are]]
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
             [clojure.core-test.number-range :as r]
-            [clojure.core-test.portability :as p]))
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(p/when-var-exists clojure.core/decimal?
+(when-var-exists clojure.core/decimal?
  (deftest test-decimal?
    (are [expected x] (= expected (decimal? x))
      false 0
@@ -22,9 +23,11 @@
      false 0N
      false 1N
      false -1N
-     false 0/2
-     false 1/2
-     false -1/2
+     #?@(:cljs []
+         :default
+         [false 0/2
+          false 1/2
+          false -1/2])
      true  0.0M
      true  1.0M
      true  -1.0M

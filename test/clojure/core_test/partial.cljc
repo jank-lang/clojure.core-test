@@ -1,11 +1,12 @@
 (ns clojure.core-test.partial
-  (:require [clojure.test :as t :refer [deftest testing is are]]
-            [clojure.core-test.portability :as p]))
+  (:require #?(:cljs  [cljs.reader])
+            [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
  (defn test-fn [& args]
    (into [] args))
 
-(p/when-var-exists clojure.core/partial
+(when-var-exists clojure.core/partial
   (deftest test-partial
     (let [simple-use (partial inc 2)]
       (is (= 3 (simple-use))))
