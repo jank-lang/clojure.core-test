@@ -1,8 +1,6 @@
 (ns clojure.core-test.quot
-  (:require #?(:cljs  [cljs.reader])
-            [clojure.test :as t :refer [deftest testing is are]]
-            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]
-            [clojure.core-test.portability :as p]))
+  (:require [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.portability :as p #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
 (when-var-exists clojure.core/quot
  (deftest test-quot

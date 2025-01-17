@@ -1,6 +1,5 @@
 (ns clojure.core-test.mod
-  (:require #?(:cljs  [cljs.reader])
-            [clojure.test :as t :refer [deftest testing is are]]
+  (:require [clojure.test :as t :refer [deftest testing is are]]
             [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]
             [clojure.core-test.portability :as p]))
 

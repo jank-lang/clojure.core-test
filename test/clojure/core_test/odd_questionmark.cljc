@@ -1,6 +1,5 @@
 (ns clojure.core-test.odd-questionmark
-  (:require #?(:cljs  [cljs.reader])
-            [clojure.test :as t :refer [deftest testing is are]]
+  (:require [clojure.test :as t :refer [deftest testing is are]]
             [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
 (when-var-exists clojure.core/odd?

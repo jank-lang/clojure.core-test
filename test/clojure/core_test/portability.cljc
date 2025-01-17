@@ -1,5 +1,4 @@
-(ns clojure.core-test.portability
-  #?(:cljs (:require [cljs.analyzer.api])))
+(ns clojure.core-test.portability)
 
 (defmacro when-var-exists [var-sym & body]
   (let [cljs? (some? (:ns &env))

@@ -1,6 +1,5 @@
 (ns clojure.core-test.unsigned-bit-shift-right
-  (:require #?(:cljs [cljs.reader])
-            [clojure.test :as t :refer [deftest testing is are]]
+  (:require [clojure.test :as t :refer [deftest testing is are]]
             [clojure.core-test.portability #?(:cljs :refer-macros :default :refer) [when-var-exists]]))
 
 (when-var-exists clojure.core/unsigned-bit-shift-right

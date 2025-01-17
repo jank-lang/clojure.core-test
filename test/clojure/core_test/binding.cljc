@@ -1,6 +1,5 @@
 (ns clojure.core-test.binding
-  (:require #?(:cljs  [cljs.reader])
-            [clojure.test :as t]
+  (:require [clojure.test :as t]
             [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
 (when-var-exists clojure.core/binding
