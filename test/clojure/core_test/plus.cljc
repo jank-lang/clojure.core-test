@@ -81,8 +81,8 @@
 
       #?@(:cljs []
           :default
-          [(is (thrown? Exception (+ r/max-int 1)))
-           (is (thrown? Exception (+ r/min-int -1)))
+          [(is (thrown? #?(:cljs :default :default Exception) (+ r/max-int 1)))
+           (is (thrown? #?(:cljs :default :default Exception) (+ r/min-int -1)))
            (is (instance? clojure.lang.BigInt (+ 0 1N)))
            (is (instance? clojure.lang.BigInt (+ 0N 1)))
            (is (instance? clojure.lang.BigInt (+ 0N 1N)))
@@ -132,8 +132,8 @@
               ;; This case is pretty safe.
               1.5 1.0 1/2)
 
-         (is (thrown? Exception (+ 1/2 nil)))
-         (is (thrown? Exception (+ nil 1/2)))
+         (is (thrown? #?(:cljs :default :default Exception) (+ 1/2 nil)))
+         (is (thrown? #?(:cljs :default :default Exception) (+ nil 1/2)))
 
          #?@(:cljs nil
              :default

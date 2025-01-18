@@ -11,4 +11,4 @@
      nil            :abc
      nil            'abc)
 
-   (is (thrown? Exception (namespace nil)))))
+   (is (thrown? #?(:cljs :default :default Exception) (namespace nil)))))

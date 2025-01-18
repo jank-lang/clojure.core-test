@@ -79,9 +79,9 @@
      double? 0.0 1 ##Inf
      double? 0.0 1 ##-Inf)
 
-   (is (thrown? Exception (quot 10 0)))
-   (is (thrown? Exception (quot ##Inf 1))) ; surprising since (/ ##Inf 1) = ##Inf
-   (is (thrown? Exception (quot ##-Inf 1))) ; surprising since (/ ##-Inf 1) = ##-Inf
-   (is (thrown? Exception (quot ##NaN 1)))
-   (is (thrown? Exception (quot 1 ##NaN)))
-   (is (thrown? Exception (quot ##NaN 1)))))
+   (is (thrown? #?(:cljs :default :default Exception) (quot 10 0)))
+   (is (thrown? #?(:cljs :default :default Exception) (quot ##Inf 1))) ; surprising since (/ ##Inf 1) = ##Inf
+   (is (thrown? #?(:cljs :default :default Exception) (quot ##-Inf 1))) ; surprising since (/ ##-Inf 1) = ##-Inf
+   (is (thrown? #?(:cljs :default :default Exception) (quot ##NaN 1)))
+   (is (thrown? #?(:cljs :default :default Exception) (quot 1 ##NaN)))
+   (is (thrown? #?(:cljs :default :default Exception) (quot ##NaN 1)))))

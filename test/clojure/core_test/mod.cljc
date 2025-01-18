@@ -78,11 +78,11 @@
                   ratio?     -1/3  -3    -4/3
                   ratio?     -7/2  -37/2 -15]))
 
-   (is (thrown? Exception (mod 10 0)))
-   (is (thrown? Exception (mod ##Inf 1))) ; surprising since (/ ##Inf 1) = ##Inf
+   (is (thrown? #?(:cljs :default :default Exception) (mod 10 0)))
+   (is (thrown? #?(:cljs :default :default Exception) (mod ##Inf 1))) ; surprising since (/ ##Inf 1) = ##Inf
    (is (NaN? (mod 1 ##Inf)))
-   (is (thrown? Exception (mod ##-Inf 1))) ; surprising since (/ ##-Inf 1) = ##-Inf
+   (is (thrown? #?(:cljs :default :default Exception) (mod ##-Inf 1))) ; surprising since (/ ##-Inf 1) = ##-Inf
    (is (NaN? (mod 1 ##-Inf)))
-   (is (thrown? Exception (mod ##NaN 1)))
-   (is (thrown? Exception (mod 1 ##NaN)))
-   (is (thrown? Exception (mod ##NaN 1)))))
+   (is (thrown? #?(:cljs :default :default Exception) (mod ##NaN 1)))
+   (is (thrown? #?(:cljs :default :default Exception) (mod 1 ##NaN)))
+   (is (thrown? #?(:cljs :default :default Exception) (mod ##NaN 1)))))

@@ -14,4 +14,4 @@
      )
 
    (is (thrown? IllegalArgumentException (char -1)))
-   (is (thrown? Exception (char nil)))))
+   (is (thrown? #?(:cljs :default :default Exception) (char nil)))))

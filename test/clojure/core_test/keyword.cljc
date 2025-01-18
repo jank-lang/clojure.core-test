@@ -78,11 +78,11 @@
   
    (is (nil? (keyword nil)))      ; (keyword nil) => nil, surprisingly
    (is (= :abc (keyword nil "abc"))) ; But if ns is nil, it just ignores it.
-   (is (thrown? Exception (keyword "abc" nil))) ; But if name is nil, then we throw.
+   (is (thrown? #?(:cljs :default :default Exception) (keyword "abc" nil))) ; But if name is nil, then we throw.
   
    ;; Two arg version requires namespace and symbol to be a string, not
    ;; a symbol or keyword like the one arg version.
-   (is (thrown? Exception (keyword 'abc "abc")))
-   (is (thrown? Exception (keyword "abc" 'abc)))
-   (is (thrown? Exception (keyword :abc "abc")))
-   (is (thrown? Exception (keyword "abc" :abc)))))
+   (is (thrown? #?(:cljs :default :default Exception) (keyword 'abc "abc")))
+   (is (thrown? #?(:cljs :default :default Exception) (keyword "abc" 'abc)))
+   (is (thrown? #?(:cljs :default :default Exception) (keyword :abc "abc")))
+   (is (thrown? #?(:cljs :default :default Exception) (keyword "abc" :abc)))))
