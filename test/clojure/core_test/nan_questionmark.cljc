@@ -4,8 +4,8 @@
 
 (when-var-exists clojure.core/NaN?
  (deftest test-NaN?
-   (is (thrown? Exception (NaN? nil)))
-   (is (thrown? Exception (NaN? "##NaN")))
+   (is (thrown? #?(:cljs :default :default Exception) (NaN? nil)))
+   (is (thrown? #?(:cljs :default :default Exception) (NaN? "##NaN")))
    (is (double? ##NaN))
    ;; NaN is not equal to anything, even itself.
    ;; See: https://clojure.org/guides/equality

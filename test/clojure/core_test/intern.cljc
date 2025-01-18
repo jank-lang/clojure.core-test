@@ -21,5 +21,5 @@
      (is (= 42 (var-get x-var))))
 
    ;; Trying to intern to an unknown namespace should throw
-   (is (thrown? Exception (intern 'unknown-namespace 'x)))
-   (is (thrown? Exception (intern 'unknonw-namespace 'x 42)))))
+   (is (thrown? #?(:cljs :default :default Exception) (intern 'unknown-namespace 'x)))
+   (is (thrown? #?(:cljs :default :default Exception) (intern 'unknonw-namespace 'x 42)))))

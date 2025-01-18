@@ -69,7 +69,7 @@
 
         ;; Zero arg
         #?(:cljs nil
-           :default (is (thrown? Exception (-))))
+           :default (is (thrown? #?(:cljs :default :default Exception) (-))))
 
         ;; Single arg
         (is (= -3 (- 3)))
