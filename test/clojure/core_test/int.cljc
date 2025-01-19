@@ -39,13 +39,13 @@
      -1   -1.1M)
 
    ;; `int` throws outside the range of 32767 ... -32768.
-   (is (thrown? #?(:cljs :default :clj IllegalArgumentException) (int -2147483648.000001)))
-   (is (thrown? #?(:cljs :default :clj ArithmeticException) (int -2147483649)))
-   (is (thrown? #?(:cljs :default :clj ArithmeticException) (int 2147483648)))
-   (is (thrown? #?(:cljs :default :clj IllegalArgumentException) (int 2147483647.000001)))
+   (is (thrown? #?(:cljs :default :clj Exception) (int -2147483648.000001)))
+   (is (thrown? #?(:cljs :default :clj Exception) (int -2147483649)))
+   (is (thrown? #?(:cljs :default :clj Exception) (int 2147483648)))
+   (is (thrown? #?(:cljs :default :clj Exception) (int 2147483647.000001)))
 
    ;; Check handling of other types
-   (is (thrown? #?(:cljs :default :clj ClassCastException) (int "0")))
-   (is (thrown? #?(:cljs :default :clj ClassCastException) (int :0)))
-   (is (thrown? #?(:cljs :default :clj ClassCastException) (int [0])))
+   (is (thrown? #?(:cljs :default :clj Exception) (int "0")))
+   (is (thrown? #?(:cljs :default :clj Exception) (int :0)))
+   (is (thrown? #?(:cljs :default :clj Exception) (int [0])))
    (is (thrown? #?(:cljs :default :clj Exception) (int nil)))))

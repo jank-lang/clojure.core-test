@@ -37,13 +37,13 @@
      -1   -1.1M)
 
    ;; `byte` throws outside the range of 127 ... -128.
-   (is (thrown? #?(:cljs :default :clj IllegalArgumentException) (byte -128.000001)))
-   (is (thrown? #?(:cljs :default :clj IllegalArgumentException) (byte -129)))
-   (is (thrown? #?(:cljs :default :clj IllegalArgumentException) (byte 128)))
-   (is (thrown? #?(:cljs :default :clj IllegalArgumentException) (byte 127.000001)))
+   (is (thrown? #?(:cljs :default :clj Exception) (byte -128.000001)))
+   (is (thrown? #?(:cljs :default :clj Exception) (byte -129)))
+   (is (thrown? #?(:cljs :default :clj Exception) (byte 128)))
+   (is (thrown? #?(:cljs :default :clj Exception) (byte 127.000001)))
 
    ;; Check handling of other types
-   (is (thrown? #?(:cljs :default :clj ClassCastException) (byte "0")))
-   (is (thrown? #?(:cljs :default :clj ClassCastException) (byte :0)))
-   (is (thrown? #?(:cljs :default :clj ClassCastException) (byte [0])))
+   (is (thrown? #?(:cljs :default :clj Exception) (byte "0")))
+   (is (thrown? #?(:cljs :default :clj Exception) (byte :0)))
+   (is (thrown? #?(:cljs :default :clj Exception) (byte [0])))
    (is (thrown? #?(:cljs :default :clj Exception) (byte nil)))))

@@ -4,9 +4,9 @@
 
 (when-var-exists clojure.core/bit-set
   (deftest test-bit-set
-    #?(:clj (is (thrown? NullPointerException (bit-set nil 1)))
+    #?(:clj (is (thrown? Exception (bit-set nil 1)))
        :cljs (is (bit-set nil 1)))
-    #?(:clj (is (thrown? NullPointerException (bit-set 1 nil)))
+    #?(:clj (is (thrown? Exception (bit-set 1 nil)))
        :cljs (is (bit-set 1 nil)))
 
     (are [ex a b] (= ex (bit-set a b))

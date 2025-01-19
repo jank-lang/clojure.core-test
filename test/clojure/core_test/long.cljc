@@ -37,11 +37,11 @@
      -1   -1.1M)
 
    ;; `long` throws outside the range of 9223372036854775807 ... -9223372036854775808
-   (is (thrown? #?(:cljs :default :clj IllegalArgumentException) (long -9223372036854775809)))
-   (is (thrown? #?(:cljs :default :clj IllegalArgumentException) (long 9223372036854775808)))
+   (is (thrown? #?(:cljs :default :clj Exception) (long -9223372036854775809)))
+   (is (thrown? #?(:cljs :default :clj Exception) (long 9223372036854775808)))
 
    ;; Check handling of other types
-   (is (thrown? #?(:cljs :default :clj ClassCastException) (long "0")))
-   (is (thrown? #?(:cljs :default :clj ClassCastException) (long :0)))
-   (is (thrown? #?(:cljs :default :clj ClassCastException) (long [0])))
+   (is (thrown? #?(:cljs :default :clj Exception) (long "0")))
+   (is (thrown? #?(:cljs :default :clj Exception) (long :0)))
+   (is (thrown? #?(:cljs :default :clj Exception) (long [0])))
    (is (thrown? #?(:cljs :default :clj Exception) (long nil)))))

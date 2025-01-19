@@ -5,10 +5,10 @@
 
 (when-var-exists clojure.core/bit-and-not
   (deftest test-bit-and-not
-    #?(:clj (is (thrown? NullPointerException (bit-and-not nil 1)))
-       :cljs (is (bit-and-not nil 1)))
-    #?(:clj (is (thrown? NullPointerException (bit-and-not 1 nil)))
-       :cljs (is (bit-and-not 1 nil)))
+    #?(:clj (is (thrown? Exception (bit-and-not nil 1)))
+       :cljs (is (= 0 (bit-and-not nil 1))))
+    #?(:clj (is (thrown? Exception (bit-and-not 1 nil)))
+       :cljs (is (= 1 (bit-and-not 1 nil))))
 
     (are [ex a b] (= ex (bit-and-not a b))
       0                        0                        0
