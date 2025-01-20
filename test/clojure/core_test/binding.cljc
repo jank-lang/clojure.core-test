@@ -49,7 +49,6 @@
     (binding [*x* :here]
       (t/is (= @f :here) "Delayed functions inherit there bindings when forced"))
     (t/is (= @f :here) "And value persists outside binding expression"))
-  (Thread/sleep 1)
   (let [f (future (test-fn))]
     (binding [*x* :now-here]
       (t/is (= @f :unset) "Thread context is separate from joining thread")))
