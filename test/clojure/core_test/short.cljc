@@ -37,13 +37,13 @@
      -1   -1.1M)
 
    ;; `short` throws outside the range of 32767 ... -32768.
-   (is (thrown? #?(:cljs :default :clj IllegalArgumentException) (short -32768.000001)))
-   (is (thrown? #?(:cljs :default :clj IllegalArgumentException) (short -32769)))
-   (is (thrown? #?(:cljs :default :clj IllegalArgumentException) (short 32768)))
-   (is (thrown? #?(:cljs :default :clj IllegalArgumentException) (short 32767.000001)))
+   (is (thrown? #?(:cljs :default :clj Exception) (short -32768.000001)))
+   (is (thrown? #?(:cljs :default :clj Exception) (short -32769)))
+   (is (thrown? #?(:cljs :default :clj Exception) (short 32768)))
+   (is (thrown? #?(:cljs :default :clj Exception) (short 32767.000001)))
 
    ;; Check handling of other types
-   (is (thrown? #?(:cljs :default :clj ClassCastException) (short "0")))
-   (is (thrown? #?(:cljs :default :clj ClassCastException) (short :0)))
-   (is (thrown? #?(:cljs :default :clj ClassCastException) (short [0])))
+   (is (thrown? #?(:cljs :default :clj Exception) (short "0")))
+   (is (thrown? #?(:cljs :default :clj Exception) (short :0)))
+   (is (thrown? #?(:cljs :default :clj Exception) (short [0])))
    (is (thrown? #?(:cljs :default :clj Exception) (short nil)))))

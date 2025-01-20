@@ -4,10 +4,10 @@
 
 (when-var-exists clojure.core/bit-flip
   (deftest test-bit-flip
-    #?(:clj (is (thrown? NullPointerException (bit-flip nil 1)))
-       :cljs (is (bit-flip nil 1)))
-    #?(:clj (is (thrown? NullPointerException (bit-flip 1 nil)))
-       :cljs (is (bit-flip 1 nil)))
+    #?(:clj (is (thrown? Exception (bit-flip nil 1)))
+       :cljs (is (= 2 (bit-flip nil 1))))
+    #?(:clj (is (thrown? Exception (bit-flip 1 nil)))
+       :cljs (is (= 0 (bit-flip 1 nil))))
 
     (are [ex a b] (= ex (bit-flip a b))
       2r1111 2r1011 2

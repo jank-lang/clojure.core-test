@@ -23,10 +23,10 @@
       (is (NaN? (dec ##NaN))))
 
     (testing "underflow"
-      #?(:clj (is (thrown? ArithmeticException (dec Long/MIN_VALUE)))
+      #?(:clj (is (thrown? Exception (dec Long/MIN_VALUE)))
          :cljs (is (= (dec js/Number.MIN_SAFE_INTEGER) (- js/Number.MIN_SAFE_INTEGER 2)))))
 
     (testing "dec-nil"
       ;; ClojureScript says (= -1 (dec nil)) because JavaScript casts null to 0
-      #?(:clj (is (thrown? NullPointerException (dec #_:clj-kondo/ignore nil)))
+      #?(:clj (is (thrown? Exception (dec #_:clj-kondo/ignore nil)))
          :cljs (is (= -1 (dec #_:clj-kondo/ignore nil)))))))

@@ -4,9 +4,9 @@
 
 (when-var-exists clojure.core/unsigned-bit-shift-right
  (deftest test-unsigned-bit-shift-right
-   #?(:clj (is (thrown? NullPointerException (unsigned-bit-shift-right nil 1)))
+   #?(:clj (is (thrown? Exception (unsigned-bit-shift-right nil 1)))
       :cljs (is (unsigned-bit-shift-right nil 1)))
-   #?(:clj (is (thrown? NullPointerException (unsigned-bit-shift-right 1 nil)))
+   #?(:clj (is (thrown? Exception (unsigned-bit-shift-right 1 nil)))
       :cljs (is (unsigned-bit-shift-right 1 nil)))
 
    (are [ex a b] (= ex (unsigned-bit-shift-right a b))

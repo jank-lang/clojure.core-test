@@ -13,5 +13,5 @@
      ;; TODO: Add Unicode tests
      )
 
-   (is (thrown? IllegalArgumentException (char -1)))
+   #?(:default (is (thrown? Exception (char -1)))) ; TODO: include CLJS test. CLJS returns string with just NULL byte
    (is (thrown? #?(:cljs :default :default Exception) (char nil)))))

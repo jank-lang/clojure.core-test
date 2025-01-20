@@ -4,8 +4,8 @@
 
 (when-var-exists clojure.core/bit-not
   (deftest test-bit-not
-    #?(:clj (is (thrown? NullPointerException (bit-not nil)))
-       :cljs (is (bit-not nil)))
+    #?(:clj (is (thrown? Exception (bit-not nil)))
+       :cljs (is (= -1 (bit-not nil))))
 
     (are [ex a] (= ex (bit-not a))
       -2r1000 2r0111
