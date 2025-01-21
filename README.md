@@ -96,20 +96,20 @@ will create a new file named `foo.cljc` in the test namespace. The
 test file will look like the following:
 
 ```
-(ns clojure.core-test.foo
+(ns clojure.core-test.{{ns-name}}
   (:require [clojure.test :as t :refer [deftest testing is are]]
             [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(when-var-exists clojure.core/foo
-  (deftest test-foo
+(when-var-exists clojure.core/{{sym-name}}
+  (deftest test-{{sym-name}}
+    ;; `testing` sections are optional, depending on how you want to
+    ;; structure your tests. If you have a lot of tests and they group
+    ;; together in subgroups, then use `testing`. The `testing` form
+    ;; can also be a nice way to group tests that only apply to a
+    ;; subset of Clojure implementations. These can then be guarded by
+    ;; reader conditionals.
     (testing "section name"
-      ;; assertions
-      ;; (is/are ... )
-      )
-    (testing "section name"
-      ;; more assertions
-      ;; (is/are ... )
-      )))
+      (is (= 1 0)))))
 ```
 
 Simply fill in test assertions and you're off and running.
