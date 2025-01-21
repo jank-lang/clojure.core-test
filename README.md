@@ -102,12 +102,12 @@ will create a new file named `foo.cljc` in the test namespace. The
 test file will look like the following:
 
 ```
-(ns clojure.core-test.{{ns-name}}
+(ns clojure.core-test.foo
   (:require [clojure.test :as t :refer [deftest testing is are]]
             [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
-(when-var-exists clojure.core/{{sym-name}}
-  (deftest test-{{sym-name}}
+(when-var-exists clojure.core/foo
+  (deftest test-foo
     ;; `testing` sections are optional, depending on how you want to
     ;; structure your tests. If you have a lot of tests and they group
     ;; together in subgroups, then use `testing`. The `testing` form
@@ -122,7 +122,7 @@ Simply fill in test assertions and you're off and running.
 
 Note: `new-test` takes care of converting various characters that
 might be problematic in file names to expanded versions. For instance
-"?" is converted to "questionmark" and "*" is converted to
+"?" is converted to "qmark" and "*" is converted to
 "star". Thus, you should always provide the name of the `clojure.core`
 symbol you want to test, not the file name or other name. You may need
 to quote or escape special characters when executing the command in
