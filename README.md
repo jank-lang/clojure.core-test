@@ -133,11 +133,10 @@ The complete set of conversions of characters to names is:
 - "*" -> "star"
 - "+" -> "plus
 - "!" -> "bang"
-- "'" -> "tick"
-- "?" -> "questionmark"
-- "<" -> "lessthan"
-- ">" -> "greaterthan"
-- "=" -> "equals"
-- "$" -> "dollar"
+- "'" -> "squote"
+- "?" -> "qmark"
+- "<" -> "lt"
+- ">" -> "gt"
+- "=" -> "eq"
 - "%" -> "percent"))
 
