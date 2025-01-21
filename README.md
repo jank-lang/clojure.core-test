@@ -78,7 +78,13 @@ npx nodemon -w target/js taget/js/node-tests.js --test=clojure.core-test.int-que
 
 You can see which Babashka tasks are available with:
 ```bash
-bb tasks
+~$ bb tasks
+The following tasks are available:
+
+test-jvm  Runs JVM tests
+test-cljs Runs CLJS tests
+new-test  Creates new test for the Clojure symbols named by <args>
+
 ```
 
 Currently, there are tasks to run the Clojure JVM and Clojurescript test suites.
@@ -113,3 +119,25 @@ test file will look like the following:
 ```
 
 Simply fill in test assertions and you're off and running.
+
+Note: `new-test` takes care of converting various characters that
+might be problematic in file names to expanded versions. For instance
+"?" is converted to "questionmark" and "*" is converted to
+"star". Thus, you should always provide the name of the `clojure.core`
+symbol you want to test, not the file name or other name. You may need
+to quote or escape special characters when executing the command in
+the shell, however, to prevent the shell from interpreting them before
+they are passed to the Babashka task.
+
+The complete set of conversions of characters to names is:
+- "*" -> "star"
+- "+" -> "plus
+- "!" -> "bang"
+- "'" -> "tick"
+- "?" -> "questionmark"
+- "<" -> "lessthan"
+- ">" -> "greaterthan"
+- "=" -> "equals"
+- "$" -> "dollar"
+- "%" -> "percent"))
+
