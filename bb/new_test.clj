@@ -36,20 +36,22 @@
   "Create a new test file for the symbol which is the first command line argument."
   [args]
   (if (zero? (count args))
-    (println "Please supply a Clojure symbol corresponding to the new test.")
-    (let [sym-name (first args)
-          ns-name (sym-name->ns-name sym-name)
-          file-name (ns-name->file-name ns-name)
-          dest-file-name (str "test/clojure/core_test/" file-name ".cljc")]
-      (if (fs/exists? dest-file-name)
-        (println dest-file-name "already exists. No action taken.")
-        (do (println "Creating" dest-file-name)
-            (let [template (slurp "templates/test-template.cljc")]
-              (spit dest-file-name
-                    (util/without-escaping
-                     (s/render template {:sym-name sym-name
-                                         :ns-name ns-name
-                                         :file-name file-name})))))))))
+    (println "Please supply one or more Clojure symbols corresponding to the new tests.")
+    (loop [[sym-name & args] args]
+      (when sym-name
+        (let [ns-name (sym-name->ns-name sym-name)
+              file-name (ns-name->file-name ns-name)
+              dest-file-name (str "test/clojure/core_test/" file-name ".cljc")]
+          (if (fs/exists? dest-file-name)
+            (println dest-file-name "already exists. No action taken.")
+            (do (println "Creating" dest-file-name)
+                (let [template (slurp "templates/test-template.cljc")]
+                  (spit dest-file-name
+                        (util/without-escaping
+                         (s/render template {:sym-name sym-name
+                                             :ns-name ns-name
+                                             :file-name file-name})))))))
+        (recur args)))))
           
 
 
