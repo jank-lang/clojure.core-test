@@ -1,0 +1,10 @@
+{:min-bb-version "0.4.0"
+ :paths ["bb"]
+ :tasks
+ {test-jvm {:doc "Runs JVM tests"
+            :task (shell "lein test")}
+  test-cljs {:doc "Runs CLJS tests"
+             :task (shell "npx shadow-cljs compile test")}
+  new-test {:doc "Creates new test for the Clojure symbols named by <args>"
+            :requires ([new-test])
+            :task (new-test/new-test *command-line-args*)}}}
