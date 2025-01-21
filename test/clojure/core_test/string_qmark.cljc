@@ -1,4 +1,4 @@
-(ns clojure.core-test.string-questionmark
+(ns clojure.core-test.string-qmark
   (:require [clojure.test :as t :refer [deftest testing is are]]
             [clojure.core-test.number-range :as r]
             [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
