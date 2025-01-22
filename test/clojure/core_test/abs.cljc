@@ -1,5 +1,6 @@
 (ns clojure.core-test.abs
   (:require [clojure.test :as t :refer [deftest testing is are]]
+            [clojure.core-test.number-range :as r]
             [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
 (when-var-exists clojure.core/abs
@@ -8,7 +9,8 @@
      (are [in ex] (= ex (abs in))
        -1             1
        1              1
-       Long/MIN_VALUE Long/MIN_VALUE    ; Special case!
+       (inc r/min-int)      (- (inc r/min-int))
+       #?@(:clj [r/min-int r/min-int])  ; fixed int 2's complement oddity
        -1.0           1.0
        -0.0           0.0
        ##-Inf         ##Inf
@@ -19,7 +21,8 @@
            :default
            [-1/5           1/5]))
      (is (NaN? (abs ##NaN)))
-     (is (thrown? #?(:cljs :default :clj Exception) (abs nil))))
+     #?(:cljs (is (zero? (abs nil)))
+        :default(is (thrown? Exception (abs nil)))))
 
     (testing "unboxed"
       (let [a  42

@@ -15,7 +15,7 @@
       8                        8                        0xff
       0                        r/all-ones-int           0
       0                        0                        r/all-ones-int
-      r/all-ones-int           r/all-ones-int           r/all-ones-int
+      #?(:cljs -1 :default r/all-ones-int)           r/all-ones-int           r/all-ones-int
       0                        r/full-width-checker-pos 0
       r/full-width-checker-pos r/full-width-checker-pos r/full-width-checker-pos
       r/full-width-checker-pos r/full-width-checker-pos r/all-ones-int

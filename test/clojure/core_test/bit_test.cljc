@@ -5,9 +5,9 @@
 (when-var-exists clojure.core/bit-test
   (deftest test-bit-test
     #?(:clj (is (thrown? Exception (bit-test nil 1)))
-       :cljs (is (bit-test nil 1)))
+       :cljs (is (= false (bit-test nil 1))))
     #?(:clj (is (thrown? Exception (bit-test 1 nil)))
-       :cljs (is (bit-test 1 nil)))
+       :cljs (is (= true (bit-test 1 nil))))
 
     (are [ex a b] (= ex (bit-test a b))
       true  2r1001 0
