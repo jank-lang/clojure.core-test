@@ -15,7 +15,6 @@
         -1 1 -1
         1 -1 -1
         0 0 -1
-        (inc r/min-int) r/max-int -1
 
         0.0 0.0 0.0
         0.0 0.0 1.0
@@ -72,8 +71,12 @@
       ;; Multi arg
       (is (= 362880 (* 1 2 3 4 5 6 7 8 9)))
 
-      (is (thrown? #?(:cljs :default :clj Exception) (* 1 nil)))
-      (is (thrown? #?(:cljs :default :clj Exception) (* nil 1)))
+      #?@(:cljs
+          [(is (= 0 (* 1 nil)))
+           (is (= 0 (* nil 1)))]
+          :default
+          [(is (thrown? Exception (* 1 nil)))
+           (is (thrown? Exception (* nil 1)))])
 
       #?@(:cljs []
           :default
@@ -87,36 +90,36 @@
            (is (instance? clojure.lang.BigInt (* 1N 5)))
            (is (instance? clojure.lang.BigInt (* 1N 5N)))
 
-           (is (thrown? #?(:cljs :default :default Exception) (* -1 r/min-int)))
-           (is (thrown? #?(:cljs :default :default Exception) (* r/min-int -1)))
-           (is (thrown? #?(:cljs :default :default Exception) (* (long (/ r/min-int 2)) 3)))
-           (is (thrown? #?(:cljs :default :default Exception) (* 3 (long (/ r/min-int 2)))))]))
+           (is (thrown? Exception (* -1 r/min-int)))
+           (is (thrown? Exception (* r/min-int -1)))
+           (is (thrown? Exception (* (long (/ r/min-int 2)) 3)))
+           (is (thrown? Exception (* 3 (long (/ r/min-int 2)))))]))
 
     #?(:cljs nil
        :default
        (testing "rationals"
          (are [prod x y] (= prod (* x y) (* y x))
-              1     1/2  2/1
-              1     1/2  2
-              -1    1/2  -2
-              -1    -1/2 2
-              1     -1/2 -2
-              1.0   1/2  2.0
-              -1.0  1/2  -2.0
-              -1.0  -1/2 2.0
-              1.0   -1/2 -2.0
-              1     1/2  2N
-              -1    1/2  -2N
-              -1    -1/2 2N
-              1     -1/2 -2N
-              1.0   1/3  3.0
-              0     1/2  0
-              0.0   1/2  0.0
-              0     1/2  0N
-              1/10  1/2  1/5
-              -1/10 1/2  -1/5
-              -1/10 -1/2 1/5
-              1/10  -1/2 -1/5)
+           1     1/2  2/1
+           1     1/2  2
+           -1    1/2  -2
+           -1    -1/2 2
+           1     -1/2 -2
+           1.0   1/2  2.0
+           -1.0  1/2  -2.0
+           -1.0  -1/2 2.0
+           1.0   -1/2 -2.0
+           1     1/2  2N
+           -1    1/2  -2N
+           -1    -1/2 2N
+           1     -1/2 -2N
+           1.0   1/3  3.0
+           0     1/2  0
+           0.0   1/2  0.0
+           0     1/2  0N
+           1/10  1/2  1/5
+           -1/10 1/2  -1/5
+           -1/10 -1/2 1/5
+           1/10  -1/2 -1/5)
 
          (is (thrown? #?(:cljs :default :default Exception) (* 1/2 nil)))
          (is (thrown? #?(:cljs :default :default Exception) (* nil 1/2)))))

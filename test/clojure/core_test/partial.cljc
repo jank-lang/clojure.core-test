@@ -9,9 +9,10 @@
   (deftest test-partial
     (let [simple-use (partial inc 2)]
       (is (= 3 (simple-use))))
-    (let [lazily-evaluated (partial inc 2 3)]
-      #?(:clj  (is (thrown? #?(:cljs :default :default Exception) (lazily-evaluated)))
-         :cljs (is (thrown? js/Error  (lazily-evaluated)))))
+    (let [lazily-evaluated (partial inc 1 17)]
+      ;; CLJS ignores extra parameters given to apply. E.g., (apply inc 1 17) => 2
+      #?(:cljs (is (= 2 (lazily-evaluated)))
+         :default (is (thrown? #?(:cljs :default :default Exception) (lazily-evaluated)))))
     (let [variadic (partial test-fn 1 2 3)]
       (is (= [1 2 3 4]   (variadic 4)))
       (is (= [1 2 3 4 5] (variadic 4 5))))

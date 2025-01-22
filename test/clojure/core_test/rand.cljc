@@ -11,11 +11,11 @@
         (let [x (repeatedly length rand)]
           (is (every? double? x))
           (is (every? pos? x))
-          (is (> (count (set x)) 1))))
+          (is (> (count (set x)) 1))))  ; shouldn't be constant
       (testing "one-arg case"
         (let [limit 0.01 ; Choose something < 1 to constrain it further
               x (repeatedly length #(rand limit))]
           (is (every? double? x))
           (is (every? pos? x))
-          (is (> (count (set x)) 1))
+          (is (> (count (set x)) 1))    ; shouldn't be constant
           (is (every? #(< % limit) x)))))))

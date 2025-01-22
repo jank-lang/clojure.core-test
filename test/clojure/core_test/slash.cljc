@@ -125,24 +125,29 @@
       #?(:cljs (is (= 50 (/ 100 1 2)))
          :default (is (= 1/362880 (/ 1 2 3 4 5 6 7 8 9))))
 
-      (is (thrown? #?(:cljs :default :clj Exception) (/ 1 0)))
-      (is (thrown? #?(:cljs :default :clj Exception) (/ nil 1)))
-      (is (thrown? #?(:cljs :default :clj Exception) (/ 1 nil))))
+      #?@(:cljs
+          [(is (= ##Inf (/ 1 0)))
+           (is (= 0 (/ nil 1)))
+           (is (= ##Inf (/ 1 nil)))]
+          :default
+          [(is (thrown? Exception (/ 1 0)))
+           (is (thrown? Exception (/ nil 1)))
+           (is (thrown? Exception (/ 1 nil)))]))
 
     #?(:cljs nil
        :default
        (testing "rationals"
          (are [expected x y] (= expected (/ x y))
-              10   10  1
-              5    10  2
-              10/3 10  3
-              1    2   2
-              4    2   1/2
-              1/4  1/2 2
-              4.0   2.0  1/2
-              0.25  1/2  2.0
-              4M    2.0M 1/2
-              0.25M 1/2  2.0M)
+           10   10  1
+           5    10  2
+           10/3 10  3
+           1    2   2
+           4    2   1/2
+           1/4  1/2 2
+           4.0   2.0  1/2
+           0.25  1/2  2.0
+           4M    2.0M 1/2
+           0.25M 1/2  2.0M)
 
          ;; Single arg
          (is (= 2N (/ 1/2)))

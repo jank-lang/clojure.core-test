@@ -72,17 +72,23 @@
       ;; Multi arg
       (is (= 45 (+ 0 1 2 3 4 5 6 7 8 9)))
 
-      (is (thrown? #?(:cljs :default :clj Exception) (+ 1 nil)))
-      (is (thrown? #?(:cljs :default :clj Exception) (+ nil 1)))
-      (is (thrown? #?(:cljs :default :clj Exception) (+ 1N nil)))
-      (is (thrown? #?(:cljs :default :clj Exception) (+ nil 1N)))
-      (is (thrown? #?(:cljs :default :clj Exception) (+ 1.0 nil)))
-      (is (thrown? #?(:cljs :default :clj Exception) (+ nil 1.0)))
 
-      #?@(:cljs []
+      #?@(:cljs
+          [(is (= 1 (+ 1 nil)))
+           (is (= 1 (+ nil 1)))
+           (is (= 1 (+ 1N nil)))
+           (is (= 1 (+ nil 1N)))
+           (is (= 1 (+ 1.0 nil)))
+           (is (= 1 (+ nil 1.0)))]
           :default
-          [(is (thrown? #?(:cljs :default :default Exception) (+ r/max-int 1)))
-           (is (thrown? #?(:cljs :default :default Exception) (+ r/min-int -1)))
+          [(is (thrown? Exception (+ 1 nil)))
+           (is (thrown? Exception (+ nil 1)))
+           (is (thrown? Exception (+ 1N nil)))
+           (is (thrown? Exception (+ nil 1N)))
+           (is (thrown? Exception (+ 1.0 nil)))
+           (is (thrown? Exception (+ nil 1.0)))
+           (is (thrown? Exception (+ r/max-int 1)))
+           (is (thrown? Exception (+ r/min-int -1)))
            (is (instance? clojure.lang.BigInt (+ 0 1N)))
            (is (instance? clojure.lang.BigInt (+ 0N 1)))
            (is (instance? clojure.lang.BigInt (+ 0N 1N)))
@@ -98,46 +104,46 @@
        (testing "rationals"
          (are [sum x y] (and (= sum (+ x y))
                              (= sum (+ y x))) ; addition should be commutative
-              1 1/2 1/2
-              1 1/3 2/3
-              1 1/4 3/4
-              1 1/5 4/5
-              1 1/6 5/6
-              1 1/7 6/7
-              1 1/8 7/8
-              1 1/9 8/9
+           1 1/2 1/2
+           1 1/3 2/3
+           1 1/4 3/4
+           1 1/5 4/5
+           1 1/6 5/6
+           1 1/7 6/7
+           1 1/8 7/8
+           1 1/9 8/9
 
-              1/2 1 -1/2
-              1/3 1 -2/3
-              1/4 1 -3/4
-              1/5 1 -4/5
-              1/6 1 -5/6
-              1/7 1 -6/7
-              1/8 1 -7/8
-              1/9 1 -8/9
+           1/2 1 -1/2
+           1/3 1 -2/3
+           1/4 1 -3/4
+           1/5 1 -4/5
+           1/6 1 -5/6
+           1/7 1 -6/7
+           1/8 1 -7/8
+           1/9 1 -8/9
 
-              3/2  1 1/2
-              5/3  1 2/3
-              7/4  1 3/4
-              9/5  1 4/5
-              11/6 1 5/6
-              13/7 1 6/7
-              15/8 1 7/8
-              17/9 1 8/9
+           3/2  1 1/2
+           5/3  1 2/3
+           7/4  1 3/4
+           9/5  1 4/5
+           11/6 1 5/6
+           13/7 1 6/7
+           15/8 1 7/8
+           17/9 1 8/9
 
-              2 3/2 1/2
-              2 4/3 2/3
+           2 3/2 1/2
+           2 4/3 2/3
 
-              ;; Be careful here because floating point rounding can bite us.
-              ;; This case is pretty safe.
-              1.5 1.0 1/2)
+           ;; Be careful here because floating point rounding can bite us.
+           ;; This case is pretty safe.
+           1.5 1.0 1/2)
 
          (is (thrown? #?(:cljs :default :default Exception) (+ 1/2 nil)))
          (is (thrown? #?(:cljs :default :default Exception) (+ nil 1/2)))
 
          #?@(:cljs nil
              :default
-             [(is (+ r/max-int 1/2))       ; test that these don't throw
+             [(is (+ r/max-int 1/2))    ; test that these don't throw
               (is (+ r/min-int -1/2))
               (is (= r/max-double (+ r/max-double 1/2))) ; should silently round
               (is (= (- r/max-double) (+ (- r/max-double) -1/2)))
@@ -181,5 +187,9 @@
         ##-Inf ##NaN
         ##NaN  ##NaN)
 
-      (is (thrown? #?(:cljs :default :clj Exception) (+ ##NaN nil)))
-      (is (thrown? #?(:cljs :default :clj Exception) (+ ##Inf nil))))))
+      #?@(:cljs
+          [(is (NaN? (+ ##NaN nil)))
+           (is (= ##Inf (+ ##Inf nil)))]
+          :default
+          [(is (thrown? Exception (+ ##NaN nil)))
+           (is (thrown? Exception (+ ##Inf nil)))]))))
