@@ -5,5 +5,8 @@
 (when-var-exists clojure.core/pr-str
  (deftest test-pr-str
    (is (= "\"a\" \"string\"" (pr-str "a" "string")))
-   (is (= "nil \"a\" \"string\" \\A \\space 1 17.0 [:a :b] {:c :d} #{:e}"
+   ;; Slight differences in the way that CLJS handles characters and
+   ;; numbers with no fractional part.
+   (is (= #?(:cljs "nil \"a\" \"string\" \"A\" \" \" 1 17 [:a :b] {:c :d} #{:e}"
+             :default "nil \"a\" \"string\" \\A \\space 1 17.0 [:a :b] {:c :d} #{:e}")
           (pr-str nil "a" "string" \A \space 1 17.0 [:a :b] {:c :d} #{:e})))))

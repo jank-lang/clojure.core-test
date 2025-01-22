@@ -30,12 +30,23 @@
    (is (= ##-Inf (min 1 2 3 4 5 ##-Inf)))
    (is (= 1 (min 1 2 3 4 5 ##Inf)))
 
-   (is (NaN? (min ##NaN 1)))
-   (is (NaN? (min 1 ##NaN)))
-   (is (NaN? (min 1 2 3 4 ##NaN)))
-   (is (NaN? (min ##-Inf ##NaN ##Inf)))
-   (is (NaN? (min ##NaN)))
+   #?@(:cljs
+       [(is (= 1 (min ##NaN 1)))        ; Bug?
+        (is (NaN? (min 1 ##NaN)))
+        (is (NaN? (min 1 2 3 4 ##NaN)))
+        (is (= ##Inf (min ##-Inf ##NaN ##Inf))) ; Bug?
+        (is (NaN? (min ##NaN)))
 
-   (is (thrown? #?(:cljs :default :clj Exception) (min "x" "y")))
-   (is (thrown? #?(:cljs :default :clj Exception) (min nil 1)))
-   (is (thrown? #?(:cljs :default :clj Exception) (min 1 nil)))))
+        (is (= "x" (min "x" "y")))
+        (is (nil? (min nil 1)))         ; nil acts like zero
+        (is (nil? (min 1 nil)))]
+       :default
+       [(is (NaN? (min ##NaN 1)))
+        (is (NaN? (min 1 ##NaN)))
+        (is (NaN? (min 1 2 3 4 ##NaN)))
+        (is (NaN? (min ##-Inf ##NaN ##Inf)))
+        (is (NaN? (min ##NaN)))
+
+        (is (thrown? #?(:cljs :default :clj Exception) (min "x" "y")))
+        (is (thrown? #?(:cljs :default :clj Exception) (min nil 1)))
+        (is (thrown? #?(:cljs :default :clj Exception) (min 1 nil)))])))

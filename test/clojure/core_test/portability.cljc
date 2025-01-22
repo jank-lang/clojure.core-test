@@ -11,5 +11,9 @@
        (println "SKIP -" '~var-sym))))
 
 (defn big-int? [n]
-  (and (integer? n)
-       (not (int? n))))
+  ;; In CLJS, all numbers are really doubles and integer? and int?
+  ;; return true if the fractional part of the double is zero
+  #?(:cljs (integer? n)
+     :default
+     (and (integer? n)
+          (not (int? n)))))

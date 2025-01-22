@@ -13,7 +13,8 @@
      true  r/min-int
      false 0.0
      false 1.0
-     false -1.0
+     #?@(:cljs [true -1.0]
+         :default [false -1.0])
      false r/max-double
      false r/min-double
      false ##Inf
@@ -21,7 +22,8 @@
      false ##NaN
      false 0N
      false 1N
-     false -1N
+     #?@(:cljs [true -1N]
+         :default [false -1N])
      #?@(:cljs []
          :default
          [false 0/2
@@ -29,7 +31,8 @@
           false -1/2])
      false 0.0M
      false 1.0M
-     false -1.0M
+     #?@(:cljs [true -1.0M]
+         :default [false -1.0M])
      false nil
      false true
      false false

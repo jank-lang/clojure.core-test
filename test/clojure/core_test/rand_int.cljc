@@ -7,9 +7,9 @@
     ;; Generally, we test that the numbers returned pass `int?` and
     ;; that they are not constant.
     (let [length 100
-          limit Integer/MAX_VALUE          ; Note Long/MAX_VALUE overflows
+          limit 2000000000              ; 2 billion
           x (repeatedly length #(rand-int limit))]
       (is (every? int? x))
       (is (every? pos? x))
-      (is (> (count (set x)) 1))
+      (is (> (count (set x)) 1))        ; Shouldn't be constant
       (is (every? #(< % limit) x)))))

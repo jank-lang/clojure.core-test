@@ -38,18 +38,32 @@
      double? -1.0 -10.0 -3.0
      double? 1.0  10.0  -3.0
 
-     decimal? 1.0M  10     3.0M
-     decimal? -1.0M -10    3.0M
-     decimal? -1.0M -10    -3.0M
-     decimal? 1.0M  10     -3.0M
-     decimal? 1.0M  10.0M  3
-     decimal? -1.0M -10.0M 3
-     decimal? -1.0M -10.0M -3
-     decimal? 1.0M  10.0M  -3
-     decimal? 1.0M  10.0M  3.0M
-     decimal? -1.0M -10.0M 3.0M
-     decimal? -1.0M -10.0M -3.0M
-     decimal? 1.0M  10.0M  -3.0M
+     #?@(:cljs
+      [double? 1.0M  10     3.0M
+       double? -1.0M -10    3.0M
+       double? -1.0M -10    -3.0M
+       double? 1.0M  10     -3.0M
+       double? 1.0M  10.0M  3
+       double? -1.0M -10.0M 3
+       double? -1.0M -10.0M -3
+       double? 1.0M  10.0M  -3
+       double? 1.0M  10.0M  3.0M
+       double? -1.0M -10.0M 3.0M
+       double? -1.0M -10.0M -3.0M
+       double? 1.0M  10.0M  -3.0M]
+      :default
+      [decimal? 1.0M  10     3.0M
+       decimal? -1.0M -10    3.0M
+       decimal? -1.0M -10    -3.0M
+       decimal? 1.0M  10     -3.0M
+       decimal? 1.0M  10.0M  3
+       decimal? -1.0M -10.0M 3
+       decimal? -1.0M -10.0M -3
+       decimal? 1.0M  10.0M  -3
+       decimal? 1.0M  10.0M  3.0M
+       decimal? -1.0M -10.0M 3.0M
+       decimal? -1.0M -10.0M -3.0M
+       decimal? 1.0M  10.0M  -3.0M])
 
      ;; Unexpectedly downconverts result to double, rather than BigDecimal
      double? 1.0  10.0M  3.0
@@ -76,11 +90,21 @@
          ratio?     -1/3 -3    -4/3
          ratio?     -7/2 -37/2 -15]))
 
-   (is (thrown? #?(:cljs :default :clj Exception) (rem 10 0)))
-   (is (thrown? #?(:cljs :default :clj Exception) (rem ##Inf 1))) ; surprising since (/ ##Inf 1) = ##Inf
-   (is (NaN? (rem 1 ##Inf)))
-   (is (thrown? #?(:cljs :default :clj Exception) (rem ##-Inf 1))) ; surprising since (/ ##-Inf 1) = ##-Inf
-   (is (NaN? (rem 1 ##-Inf)))
-   (is (thrown? #?(:cljs :default :clj Exception) (rem ##NaN 1)))
-   (is (thrown? #?(:cljs :default :clj Exception) (rem 1 ##NaN)))
-   (is (thrown? #?(:cljs :default :clj Exception) (rem ##NaN 1)))))
+   #?@(:cljs
+    [(is (NaN? (rem 10 0)))
+     (is (NaN? (rem ##Inf 1)))
+     (is (NaN? (rem 1 ##Inf)))
+     (is (NaN? (rem ##-Inf 1)))
+     (is (NaN? (rem 1 ##-Inf)))
+     (is (NaN? (rem ##NaN 1)))
+     (is (NaN? (rem 1 ##NaN)))
+     (is (NaN? (rem ##NaN 1)))]
+    :default
+    [(is (thrown? #?(:cljs :default :clj Exception) (rem 10 0)))
+     (is (thrown? #?(:cljs :default :clj Exception) (rem ##Inf 1)))
+     (is (NaN? (rem 1 ##Inf)))
+     (is (thrown? #?(:cljs :default :clj Exception) (rem ##-Inf 1)))
+     (is (NaN? (rem 1 ##-Inf)))
+     (is (thrown? #?(:cljs :default :clj Exception) (rem ##NaN 1)))
+     (is (thrown? #?(:cljs :default :clj Exception) (rem 1 ##NaN)))
+     (is (thrown? #?(:cljs :default :clj Exception) (rem ##NaN 1)))])))
