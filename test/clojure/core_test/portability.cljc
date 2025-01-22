@@ -5,10 +5,10 @@
         exists? (boolean (if cljs?
                            ((resolve 'cljs.analyzer.api/resolve) &env var-sym)
                            (resolve var-sym)))]
-    `(if ~exists?
-       (do
+    (if exists?
+      `(do
          ~@body)
-       (println "SKIP -" '~var-sym))))
+      `(println "SKIP -" '~var-sym))))
 
 (defn big-int? [n]
   (and (integer? n)
