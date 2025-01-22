@@ -12,13 +12,19 @@
       (float 1.0) 1N
       (float 0.0) 0N
       (float -1.0) -1N
+      ;; The CLJS reader will read these values and convert to
+      ;; double. Since they are all clean conversions, they match
       (float 1.0) 12/12
       (float 0.0) 0/12
       (float -1.0) -12/12
       (float 1.0) 1.0M
       (float 0.0) 0.0M
       (float -1.0) -1.0M
-      (float 0.0) r/min-double)
+      ;; Since CLJS numbers are all doubles, casting r/min-double to a
+      ;; float doesn't do anything, whereas in Clojure JVM it rounds
+      ;; down to zero.
+      #?@(:cljs [r/min-double r/min-double]
+          :default [(float 0.0) r/min-double]))
     (is (NaN? (float ##NaN)))
 
     #?@(:cljs
