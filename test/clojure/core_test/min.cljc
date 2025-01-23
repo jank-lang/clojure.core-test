@@ -31,10 +31,12 @@
    (is (= 1 (min 1 2 3 4 5 ##Inf)))
 
    #?@(:cljs
-       [(is (= 1 (min ##NaN 1)))        ; Bug?
+       ;; There are bugs here:
+       ;; https://clojure.atlassian.net/browse/CLJS-3425
+       [(is (= 1 (min ##NaN 1)))        ; Bug
         (is (NaN? (min 1 ##NaN)))
         (is (NaN? (min 1 2 3 4 ##NaN)))
-        (is (= ##Inf (min ##-Inf ##NaN ##Inf))) ; Bug?
+        (is (= ##Inf (min ##-Inf ##NaN ##Inf))) ; Bug
         (is (NaN? (min ##NaN)))
 
         (is (= "x" (min "x" "y")))
