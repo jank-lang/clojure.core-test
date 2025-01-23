@@ -31,10 +31,12 @@
    (is (= ##Inf (max 1 2 3 4 5 ##Inf)))
 
    #?@(:cljs
-       [(is (= 1 (max ##NaN 1)))        ; Bug?
+       ;; There are bugs here:
+       ;; https://clojure.atlassian.net/browse/CLJS-3425
+       [(is (= 1 (max ##NaN 1)))        ; Bug
         (is (NaN? (max 1 ##NaN)))       ; Works as in JVM
         (is (NaN? (max 1 2 3 4 ##NaN)))
-        (is (= ##Inf (max ##-Inf ##NaN ##Inf)))  ; Bug?
+        (is (= ##Inf (max ##-Inf ##NaN ##Inf)))  ; Bug
         (is (NaN? (max ##NaN)))
 
         (is (= "y" (max "x" "y")))      ; In CLJS "x" and "y" are characters
