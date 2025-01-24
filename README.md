@@ -64,7 +64,7 @@ npx shadow-cljs watch test
 If you only want to autorun specific test files you may run the following:
 
 ```bash
-npx shadow-cljs watch app --config-merge '{:autorun false}'
+npx shadow-cljs watch test --config-merge '{:autorun false}'
 ```
 
 In another terminal, run the following, multiple namespaces are comma (,)

@@ -1,52 +1,99 @@
 (ns clojure.core-test.taps
   (:require [clojure.test :as t :refer [deftest testing is are]]
+            #?(:cljs [cljs.test :refer-macros [async]])
             [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
 (when-var-exists clojure.core/add-tap
- ;; testsing multiple tap functions
- (defn sleep [ms]
-   #?(:clj (Thread/sleep ms)
-      :cljs nil)) ;; can test in the next iteration of the event loop, but this won't show up in the testing results
+  #?(:cljs
+     (do
+       (defn tap-tester
+         [atom-ref]
+         (fn [x]
+           (if (fn? x)
+             (x nil)
+             (swap! atom-ref conj x))))
 
- ;; These tests may need promises in ClojureScript
+       (defn await-tap
+         []
+         (let [promise-obj (js/Promise.withResolvers)
+               promise (.-promise promise-obj)
+               resolve (.-resolve promise-obj)]
+           (tap> resolve)
+           promise))
 
- (deftest tapping
-   (let [counter1 (volatile! 0)
-         counter2 (volatile! 0)
-         tester1 (fn [a] (vswap! counter1 + a))
-         tester2 (fn [a] (vswap! counter2 + a))
-         err (fn [x] (throw (ex-info (str x) {:x x})))]
-     (is (nil? (remove-tap tester1)))
-     (is (nil? (add-tap tester1)))
-     (is (nil? (add-tap nil)))
-     (is (nil? (add-tap err)))
-     (tap> 2)
-     (is (nil? (add-tap tester2)))
-     (tap> 3)
-     (tap> 101)
-     (sleep 50) ;; the tap queue always races
-     (is (= 106 @counter1))
-     (is (= 104 @counter2))))
+       (defn p-delay
+         "This is safer in JS given tap> uses setTimeout 0 instead of a thread"
+         [ms]
+         (let [{:keys [promise resolve]} (js->clj (js/Promise.withResolvers)
+                                                  :keywordize-keys true)]
+           (js/setTimeout resolve ms)
+           promise))
 
+       (deftest tapping
+         (async
+          done
+          (let [data-ref-1 (atom [])
+                data-ref-2 (atom [])
+                tester-1 (tap-tester data-ref-1)
+                tester-2 (tap-tester data-ref-2)]
 
- (deftest removals
-   (let [counter1 (volatile! 0)
-         counter2 (volatile! 0)
-         tester1 (fn [a] (vswap! counter1 + a))
-         tester2 (fn [a] (vswap! counter2 + a))
-         err (fn [x] (throw (ex-info (str x) {:x x})))]
-     (is (nil? (remove-tap tester1)))
-     (is (nil? (add-tap tester1)))
-     (is (nil? (add-tap tester2)))
-     (tap> 3)
-     (sleep 100)
-     (is (nil? (remove-tap tester1)))
-     (tap> 5)
-     (is (nil? (remove-tap tester2)))
-     (sleep 50) ;; if we tap now, we can still see it in the testers
-     (tap> 100)
-     (sleep 50)
-     (is (nil? (remove-tap nil)))
-     (is (nil? (remove-tap tester2)))
-     (is (= 3 @counter1))
-     (is (= 8 @counter2)))))
+            (-> (js/Promise.resolve)
+                (.then (fn []
+                         (tap> 0)
+                         (p-delay 2)))
+                (.then (fn [] (is (nil? (add-tap tester-1)))))
+                (.then (fn []
+                         (tap> 0)
+                         (tap> 1)
+                         (await-tap)))
+                (.then (fn []
+                         (is (nil? (add-tap tester-2)))))
+                (.then (fn []
+                         (tap> 2)
+                         (await-tap)))
+                (.then (fn []
+                         (remove-tap tester-1)))
+                (.then (fn []
+                         (tap> 3)
+                         (await-tap)))
+                (.then (fn []
+                         (is (= [0 1 2] @data-ref-1))
+                         (is (= [2 3] @data-ref-2))))
+                (.then done done))))))
+
+     :default
+     (do
+       (defn tap-tester
+         [atom-ref]
+         (fn [x]
+           (if (instance? clojure.lang.IPending x)
+             (deliver x nil)
+             (swap! atom-ref conj x))))
+
+       (defn await-tap
+         []
+         (let [p (promise)]
+           (tap> p)
+           @p))
+
+       (deftest tapping
+         (let [data-ref-1 (atom [])
+               data-ref-2 (atom [])
+               tester-1 (tap-tester data-ref-1)
+               tester-2 (tap-tester data-ref-2)]
+
+           (tap> 0)
+           (is (nil? (add-tap tester-1)))
+           (tap> 0)
+           (tap> 1)
+           (await-tap)
+           (is (nil? (add-tap tester-2)))
+           (tap> 2)
+           (await-tap)
+           (remove-tap tester-1)
+           (tap> 3)
+           (await-tap)
+           (is (= [0 1 2] @data-ref-1))
+           (is (= [2 3] @data-ref-2)))))))
+
+     ;; can test in the next iteration of the event loop, but this won't show up in the testing results

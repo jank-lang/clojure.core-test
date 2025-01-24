@@ -1,5 +1,5 @@
 (ns clojure.core-test.subs
-  (:require [clojure.test :as t :refer [deftest testing is are]]
+  (:require [clojure.test :as t :refer [deftest is]]
             [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
 (when-var-exists clojure.core/subs
@@ -17,7 +17,10 @@
          (is (= "abcde" (subs "abcde" -1)))
          (is (= "abc" (subs "abcde" -1 3)))
          (is (= "" (subs "abcde" -1 -3)))
-         (is (thrown? :default (subs nil 1 2)))
+         (try
+           (subs nil 1 2)
+           (catch :default err
+             (is (= (.-message err) "Cannot read properties of null (reading 'substring')"))))
          (is (= "ab" (subs "abcde" nil 2)))
          (is (= "a" (subs "abcde" 1 nil)))]
         :default
