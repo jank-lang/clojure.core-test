@@ -17,10 +17,7 @@
          (is (= "abcde" (subs "abcde" -1)))
          (is (= "abc" (subs "abcde" -1 3)))
          (is (= "" (subs "abcde" -1 -3)))
-         (try
-           (subs nil 1 2)
-           (catch :default err
-             (is (= (.-message err) "Cannot read properties of null (reading 'substring')"))))
+         (is (thrown? :default (subs nil 1 2)))
          (is (= "ab" (subs "abcde" nil 2)))
          (is (= "a" (subs "abcde" 1 nil)))]
         :default
