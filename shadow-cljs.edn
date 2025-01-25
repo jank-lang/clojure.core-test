@@ -11,4 +11,5 @@
          :ns-regexp "-test"
          :autorun true
          :compiler-options {:warnings {:invalid-arithmetic false}}
-         :release {:autorun false}}}}
+         :release {:autorun false
+                   :compiler-options {:optimizations :simple}}}}}
