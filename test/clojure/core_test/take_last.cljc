@@ -4,4 +4,12 @@
 
 (when-var-exists clojure.core/take-last
   (deftest test-take-last
-    (is (= (range 8 10) (take-last 2 (range 0 10))))))
+    (is (= (range 8 10) (take-last 2 (range 0 10))))
+    (is (nil? (take-last 2 nil)))       ; Returns `nil`, not `()`
+
+    ;; Note that there is no transducer version of `take-last` in
+    ;; `clojure.core`.
+
+    ;; Negative testing
+    (is (thrown? #?(:cljs :default, :default Exception)
+                 (doall (take-last nil (range 0 10)))))))
