@@ -12,4 +12,5 @@
          :autorun true
          :compiler-options {:warnings {:invalid-arithmetic false}}
          :release {:autorun false
-                   :compiler-options {:optimizations :simple}}}}}
+                   :compiler-options {:optimizations :simple
+                                      :elide-asserts false}}}}}
