@@ -6,6 +6,7 @@
   (deftest test-rest
     (is (= '(1 2 3 4 5 6 7 8 9) (rest (range 0 10))))
     (is (= '(2 3 4 5 6 7 8 9) (rest (rest (range 0 10)))))
+    (is (= 1 (first (rest (range)))))   ; Infinite lazy seq
     (is (= '(2 3) (rest [1 2 3])))
     (is (= '() (rest nil)))
     (is (= '() (rest '())))
