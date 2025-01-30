@@ -46,7 +46,8 @@
       '= '=
       '= :=
       'abc*+!-_'?<>= "abc*+!-_'?<>="
-      'clojure.core/+ #'+)
+      #?(:cljs 'cljs.core/+
+         :default 'clojure.core/+) #'+)
 
     (are [expected ns name] (= expected (symbol ns name))
       'abc/abc     "abc"     "abc"
