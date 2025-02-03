@@ -14,6 +14,6 @@
       '([1] [2] [3]) [[3] [1] [2]]
       '("a" "b" "c") ["b" "a" "c"]
       '(\c \e \j \l \o \r \u) "clojure")
-    (is (thrown? Exception (sort 1)))
-    (is (thrown? Exception (sort [1 []])))
+    (is (thrown? #?(:cljs :default, :default Exception) (sort 1)))
+    (is (thrown? #?(:cljs :default, :default Exception) (sort [1 []])))
     (is (= '(3 2 1) (sort #(- (compare %1 %2)) [1 2 3])))))
