@@ -6,7 +6,8 @@
  clojure.core/interpose
  (deftest test-interpose
    (testing "common cases"
-     (is (function? (interpose "a")))
+     #?(:clj (is (function? (interpose "a")))
+        :cljs [])
      (are [in ex] (= (apply interpose in) ex)
        ["a" [1 2 3]]              [1 "a" 2 "a" 3]
        [#{1} #{"a"}]              ["a"]
