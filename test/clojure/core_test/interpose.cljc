@@ -1,12 +1,12 @@
 (ns clojure.core-test.interpose
-  (:require [clojure.test :as t :refer [deftest testing is are #?(:clj function?)]]
+  (:require [clojure.test :as t :refer [deftest testing is are]]
             [clojure.core-test.portability #?(:cljs :refer-macros :default :refer)  [when-var-exists]]))
 
 (when-var-exists
  clojure.core/interpose
  (deftest test-interpose
    (testing "common cases"
-     #?(:clj (is (function? (interpose "a"))))
+     #?(:clj (is (t/function? (interpose "a"))))
      (are [in ex] (= (apply interpose in) ex)
        ["a" [1 2 3]]              [1 "a" 2 "a" 3]
        [#{1} #{"a"}]              ["a"]
