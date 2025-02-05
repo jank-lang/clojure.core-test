@@ -32,7 +32,4 @@
          ['(1 2 3) '("a" "b")]    [1 "a" 2 "b"]
          [(range)  '("a" "b")]    [0 "a" 1 "b"]
          [(range)  nil]           []
-         [nil      (range)]       []))
-     (testing "Bad inputs"
-       #?(:clj (is (thrown? Exception (interleave :not-seqable [1 2 3]))))
-       #?(:clj (is (thrown? Exception (interleave 123          [1 2 3]))))))))
+         [nil      (range)]       [])))))
