@@ -5,7 +5,7 @@
 
 (when-var-exists str/capitalize
   (deftest test-capitalize
-    (is (thrown? #?(:cljs :default :default Exception) (str/capitalize nil)))
+    (is (thrown? #?(:cljs :default :clj Exception) (str/capitalize nil)))
     (is (= "1" (str/capitalize 1)))
     (is (= "Asdf" (str/capitalize 'Asdf)))
     (is (= "Asdf" (str/capitalize 'Asdf)))
