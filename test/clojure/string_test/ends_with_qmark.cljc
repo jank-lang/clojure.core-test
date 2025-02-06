@@ -5,4 +5,6 @@
 
 (when-var-exists str/ends-with?
   (deftest test-ends-with?
-    ))
+    (is (str/ends-with? "" ""))
+    (is (str/ends-with? "a-test" "t"))
+    (is (not (str/ends-with? "a-test" "s")))))

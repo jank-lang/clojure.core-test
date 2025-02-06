@@ -5,4 +5,9 @@
 
 (when-var-exists str/blank?
   (deftest test-blank?
-    (is false)))
+    (is (str/blank? ""))
+    (is (str/blank? nil))
+    (is (str/blank? "  "))
+    (is (str/blank? " \t "))
+    (is (not (str/blank? "nil")))
+    (is (not (str/blank? " as df ")))))

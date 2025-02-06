@@ -5,4 +5,6 @@
 
 (when-var-exists str/starts-with?
   (deftest test-starts-with?
-    ))
+    (is (str/starts-with? "" ""))
+    (is (str/starts-with? "a-test" "a"))
+    (is (not (str/starts-with? "a-test" "b")))))

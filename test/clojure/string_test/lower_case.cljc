@@ -5,4 +5,10 @@
 
 (when-var-exists str/lower-case
   (deftest test-lower-case
-    ))
+    (is (= "" (str/lower-case "")))
+    (is (= "asdf" (str/lower-case "ASDF")))
+    (is (= "asdf" (str/lower-case "asdf")))
+    (is (string? (str/lower-case "asdf")))
+    (let [s "ASDF"]
+      (is (= "asdf" (str/lower-case "ASDF")))
+      (is (= "ASDF" s) "original string mutated"))))

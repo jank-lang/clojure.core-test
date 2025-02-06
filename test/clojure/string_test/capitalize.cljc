@@ -5,4 +5,6 @@
 
 (when-var-exists str/capitalize
   (deftest test-capitalize
-    ))
+    (is (= "" (str/capitalize "")))
+    (is (= "A" (str/capitalize "a")))
+    (is (= "A thing" (str/capitalize "a Thing")))))
