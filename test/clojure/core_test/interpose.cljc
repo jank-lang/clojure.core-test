@@ -6,7 +6,7 @@
  clojure.core/interpose
  (deftest test-interpose
    (testing "common cases"
-     #?(:clj (is (t/function? (interpose "a"))))
+     (is (fn? (interpose "a")))
      (are [in ex] (= (apply interpose in) ex)
        ["a" [1 2 3]]              [1 "a" 2 "a" 3]
        [#{1} #{"a"}]              ["a"]
@@ -22,4 +22,6 @@
      (testing "nil inputs"
        (are [in ex] (= (apply interpose in) ex)
          [nil [1 2 3]]            [1 nil 2 nil 3]
-         [1   nil]                '())))))
+         [1   nil]                '()))
+     (testing "Bad inputs"
+       #?(:clj (is (thrown? Exception (interpose 1 :not-collection))))))))
