@@ -60,7 +60,3 @@
                                              :ns-suffix ns-suffix
                                              :file-name file-name})))))))
         (recur args)))))
-
-(comment
-  (namespace-munge 'clojure.string)
-  )
